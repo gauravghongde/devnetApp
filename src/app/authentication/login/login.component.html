@@ -1,0 +1,38 @@
+<div id="login-component">
+    <div class="container mt-lg-5">
+        <div class="row mx-auto mb-lg-2" style="width: 300px;">
+            <button type="submit" class="btn btn-primary btn-block">Login with Github</button>
+        </div>
+        <div class="row mx-auto mb-lg-2" style="width: 300px;">
+            <button type="submit" class="btn btn-primary btn-block">Login with Google</button>
+        </div>
+        <div class="row mx-auto mb-lg-3" style="width: 300px;">
+            <button type="submit" class="btn btn-primary btn-block">Login with twitter</button>
+        </div>
+        <div class="row align-items-center">
+            <div class="card mx-auto" style="width: 300px;">
+                <div class="card-body">
+                    <form>
+                        <div class="form-group">
+                            <label class="text-left" for="exampleInputEmail1">Email address</label>
+                            <input type="email" class="form-control" id="exampleInputEmail1"
+                                aria-describedby="emailHelp">
+                        </div>
+                        <div class="form-group">
+                            <label class="text-left" for="exampleInputPassword1">Password</label>
+                            <input [(ngModel)]="loginUserData.password" type="password" class="form-control" id="exampleInputPassword1">
+                        </div>
+                        <div class="form-group form-check">
+                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                            <label class="form-check-label text-left" for="exampleCheck1">Remember password</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Login</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-lg-3">
+            Don't have an account? <a href="/register">Register</a>
+        </div>
+    </div>
+</div>
