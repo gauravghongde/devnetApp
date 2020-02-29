@@ -1,5 +1,9 @@
 import { Component, OnInit, OnDestroy, Renderer2 } from '@angular/core';
-import { AuthService } from 'src/app/auth.service';
+import { AuthService } from 'src/app/_services/auth.service';
+import { Router } from '@angular/router';
+import { isNullOrUndefined } from 'util';
+import { ResponseTypes } from 'src/app/constants/app.constants';
+
 
 @Component({
   selector: 'app-login',
@@ -8,22 +12,39 @@ import { AuthService } from 'src/app/auth.service';
 })
 export class LoginComponent implements OnInit, OnDestroy {
 
-  loginUserData: any = {
-    usename: string ,
-    password: string;
-  };
-  constructor(private renderer: Renderer2, private auth: AuthService) { }
+  loader: boolean = false;
+  username: string;
+  password: string;
+  messageType: string;
+  message: string;
+
+  constructor(
+    private renderer: Renderer2,
+    private router: Router,
+    private authService: AuthService
+  ) { }
 
   ngOnInit(): void {
+    if (this.authService.isLoggedIn()) {
+      this.router.navigate(['home']);
+    }
     this.renderer.addClass(document.body, 'login-bg');
   }
 
   loginUser() {
-    this.auth.loginUser(this.loginUserData)
-    .subscribe(
-      res => console.log(res),
-      err => console.log(err)
-    );
+    this.loader = true;
+    this.authService.login(this.username, this.password).subscribe((loginResp: any) => {
+      console.log(loginResp);
+      if (!isNullOrUndefined(loginResp) && !isNullOrUndefined(loginResp.username)){
+        this.router.navigate(['home']);
+        this.messageType = ResponseTypes.SUCCESS;
+        this.message = 'Logged in Successfully!!';        
+      } else {
+        this.messageType = ResponseTypes.FAILED;
+        this.message = 'Username or Password did not match';
+      }
+      this.loader = false;
+    });
   }
 
   ngOnDestroy(): void {
