@@ -35,16 +35,19 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.loader = true;
     this.authService.login(this.username, this.password).subscribe((loginResp: any) => {
       console.log(loginResp);
-      if (!isNullOrUndefined(loginResp) && !isNullOrUndefined(loginResp.username)){
+      if (!isNullOrUndefined(loginResp) && !isNullOrUndefined(loginResp.username)) {
         this.router.navigate(['home']);
         this.messageType = ResponseTypes.SUCCESS;
-        this.message = 'Logged in Successfully!!';        
+        this.message = 'Logged in Successfully!!';
       } else {
         this.messageType = ResponseTypes.FAILED;
         this.message = 'Username or Password did not match';
       }
       this.loader = false;
     });
+    errorResponse => {
+      // Login Error
+    }
   }
 
   ngOnDestroy(): void {

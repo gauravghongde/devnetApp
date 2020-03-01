@@ -1,5 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-white">
-    <a class="navbar-brand" href="#"><h4>devnet</h4></a>
+    <a class="navbar-brand" href="#">
+        <h4>devnet</h4>
+    </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -24,14 +26,17 @@
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                 </form>
             </li>
-            <li *ngIf="!isLoggedIn" class="nav-item">
+            <li *ngIf="!(currentUser$ | async)" class="nav-item">
                 <a class="nav-link" routerLink="/login" routerLinkActive="active">Login</a>
             </li>
-            <li *ngIf="!isLoggedIn" class="nav-item">
+            <li *ngIf="!(currentUser$ | async)" class="nav-item">
                 <a class="nav-link" routerLink="/register" routerLinkActive="active">Sign Up</a>
             </li>
-            <li *ngIf="isLoggedIn" class="nav-item">
-                <a class="nav-link" (click)="logout()">Sign Out</a>
+            <li *ngIf="(currentUser$ | async)" class="nav-item">
+                <button (click)="logout()" class="btn btn-outline-warning my-2 my-sm-0">Log Out</button>
+            </li>
+            <li *ngIf="(currentUser$ | async)" class="nav-item">
+                {{currentUserObj.username}}
             </li>
         </ul>
     </div>

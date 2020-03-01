@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { User } from '../constants/app.constants';
 import { AuthService } from '../_services/auth.service';
 
 @Component({
@@ -8,11 +10,16 @@ import { AuthService } from '../_services/auth.service';
 })
 export class NavbarComponent implements OnInit {
 
-  isLoggedIn: boolean;
+  currentUserSubj: BehaviorSubject<User>;
+  currentUserObj: User;
+  currentUser$: Observable<User>;
+
   constructor(private authService: AuthService) { }
 
-  ngOnInit(): void {
-    this.isLoggedIn = this.authService.isLoggedIn();
+  ngOnInit() {
+    this.currentUserSubj = this.authService.currentUser;
+    this.currentUserObj = this.currentUserSubj.value;
+    this.currentUser$ = this.currentUserSubj.asObservable();
   }
 
   logout() {
