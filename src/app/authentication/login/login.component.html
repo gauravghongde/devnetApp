@@ -1,0 +1,42 @@
+<div id="login-component">
+    <div class="container mt-lg-5">
+        <div class="row mx-auto mb-lg-2" style="width: 300px;">
+            <button type="submit" class="btn btn-primary btn-block">Login with Github</button>
+        </div>
+        <div class="row mx-auto mb-lg-2" style="width: 300px;">
+            <button type="submit" class="btn btn-primary btn-block">Login with Google</button>
+        </div>
+        <div class="row mx-auto mb-lg-3" style="width: 300px;">
+            <button type="submit" class="btn btn-primary btn-block">Login with twitter</button>
+        </div>
+        <div class="row align-items-center">
+            <div class="card mx-auto" style="width: 300px;">
+                <div class="card-body">
+                    <form>
+                        <div class="form-group">
+                            <label class="text-left" for="usernameInput">Username</label>
+                            <input [(ngModel)]="username" name="username" placeholder="User" type="text"
+                                class="form-control" id="usernameInput" aria-describedby="emailHelp" required>
+                            <!-- <div [hidden]="!username.errors.invalid">
+                                    There is no user or password matching this data.
+                                </div> -->
+                        </div>
+                        <div class="form-group">
+                            <label class="text-left" for="passwordInput">Password</label>
+                            <input [(ngModel)]="password" name="password" placeholder="Password" type="password"
+                                class="form-control" id="passwordInput" required>
+                        </div>
+                        <div class="form-group form-check">
+                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                            <label class="form-check-label text-left" for="exampleCheck1">Remember password</label>
+                        </div>
+                        <input type="submit" (click)="loginUser()" value="Login" class="btn btn-primary btn-block">
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-lg-3">
+            Don't have an account? <a href="/register">Register</a>
+        </div>
+    </div>
+</div>
