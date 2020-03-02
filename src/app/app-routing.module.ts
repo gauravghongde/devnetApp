@@ -24,6 +24,7 @@ const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
+    pathMatch: 'full',
     canActivate: [AuthGuard]
   },
   {
