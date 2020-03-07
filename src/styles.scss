@@ -3,7 +3,7 @@
 @import "./app/fontawesome/scss/solid.scss";
 @import "./app/shared/shared_variables.scss";
 
-* {
+p,h5,h6,body,footer,a {
     font-family: Roboto Condensed, sans-serif;
     font-style: normal;
     font-weight: 400;
