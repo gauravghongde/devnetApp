@@ -13,6 +13,7 @@ export class NavbarComponent implements OnInit {
   currentUserSubj: BehaviorSubject<User>;
   currentUserObj: User;
   currentUser$: Observable<User>;
+  status: boolean = false;
 
   constructor(private authService: AuthService) { }
 

@@ -1,0 +1,15 @@
+@import "../../app/shared/shared_variables.scss";
+
+.nav-bg-color {
+    background-color: $dn-dark-blue;
+}
+
+.search-expand {
+    width: 600px;
+    transition: all .2s ease-in-out;
+}
+
+.search-collapse {
+    width: 200px;
+    transition: all .2s ease-in-out;
+}
