@@ -1,0 +1,37 @@
+<h2 class="mt-4 mx-4 pl-2">
+    Ask a Question
+</h2>
+
+<div class="mt-4 mx-4 px-2">
+    <div class="row">
+        <div class="col">
+            <form>
+                <div class="card">
+                    <div class="card-header form-group">
+                        <label for="questionTitle">Title</label>
+                        <input type="text" [(ngModel)]="questionTitle" class="form-control" name="questionTitle" aria-describedby="qustionTitle"
+                            placeholder="Enter Title">
+                    </div>
+                    <div class="card-body form-group">
+                        <label for="questionBody">Enter some description (you can include code)</label>
+                        <textarea class="form-control variable-textarea" [(ngModel)]="markdown" name="questionBody" rows="4"></textarea>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    <b>Preview</b>
+                </div>
+                <div class="card-body word-warp">
+                    <p *ngIf="!questionTitle.length" class="text-muted">As you type preview here!</p>
+                    <h3 *ngIf="questionTitle.length">{{questionTitle}}<hr/></h3>
+                    <markdown *ngIf="questionTitle.length" 
+                    class="variable-binding" 
+                    [data]="markdown"></markdown>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

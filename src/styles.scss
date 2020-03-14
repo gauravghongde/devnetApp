@@ -1,21 +1,104 @@
 /* You can add global styles to this file, and also import other style files */
-* {
+@import "./app/fontawesome/scss/fontawesome.scss";
+@import "./app/fontawesome/scss/solid.scss";
+@import "./app/shared/shared_variables.scss";
+
+p,h5,h6,body,footer,a {
     font-family: Roboto Condensed, sans-serif;
     font-style: normal;
     font-weight: 400;
 }
 
+body {
+    background-color: #ebebeb !important;
+}
+
+//body tags used in renderer2
+
 .login-bg {
     background-color: #e6e6e6 !important;
 }
 
-.btn {
-    border-color: darkslategray;
+.loader-body {
+    overflow: hidden;
+}
+
+// modified bootstrap 
+
+.btn-hollow-color-dark-blue {
+    border-color: $dn-dark-blue;
     background-color: transparent;
-    color: darkslategray;
+    color: $dn-dark-blue;
+}
+
+.btn-hollow-color-dark-blue:hover {
+    border-color: $dn-dark-blue;
+    background-color: $dn-dark-blue;
+    color: whitesmoke;
+}
+
+.btn-hollow-color-light-blue {
+    border-color: $dn-light-blue;
+    background-color: transparent;
+    color: $dn-light-blue;
+}
+
+.btn-hollow-color-light-blue:hover {
+    border-color: $dn-light-blue;
+    background-color: $dn-light-blue;
+    color: whitesmoke;
+}
+
+.btn-hollow-color-yellow {
+    border-color: $dn-yellow;
+    background-color: transparent;
+    color: $dn-yellow;
+}
+
+.btn-hollow-color-yellow:hover {
+    border-color: $dn-yellow;
+    background-color: $dn-yellow;
+    color: whitesmoke;
+}
+
+.btn-hollow-color-green {
+    border-color: $dn-green;
+    background-color: transparent;
+    color: $dn-green;
+}
+
+.btn-hollow-color-green:hover {
+    border-color: $dn-green;
+    background-color: $dn-green;
+    color: whitesmoke;
+}
+
+.btn-hollow-color-pink {
+    border-color: $dn-pink;
+    background-color: transparent;
+    color: $dn-pink;
+}
+
+.btn-hollow-color-pink:hover {
+    border-color: $dn-pink;
+    background-color: $dn-pink;
+    color: whitesmoke;
+}
+
+.btn {
     font-family: Roboto Condensed, sans-serif;
     font-weight: 600;
 }
+
+.btn-circle {
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    padding: 6px 0;
+    font-size: 12px;
+    line-height: 1.42;
+    border-radius: 20px;
+  }
 
 .card {
     margin: 0 auto; /* Added */
@@ -37,11 +120,7 @@
   color: black;
 }
   
-.btn:hover {
-    border-color: darkslategray;
-    background-color: darkslategray;
-    color: whitesmoke;
-}
+
 
 h1,h2,h3,h4 {
     font-family: proxima-nova, sans-serif;

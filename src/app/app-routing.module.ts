@@ -4,14 +4,15 @@ import { LoginComponent } from './authentication/login/login.component';
 import { RegisterComponent } from './authentication/register/register.component';
 import { AuthGuard } from './guards/auth.guard';
 import { HomeComponent } from './home/home.component';
+import { AskQuestionComponent } from './components/ask-question/ask-question.component';
 
 
 const routes: Routes = [
-  {
-    path: '',
-    redirectTo: '/login',
+  { 
+    path: '', 
+    component: HomeComponent,
     pathMatch: 'full',
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard] 
   },
   {
     path: 'login',
@@ -23,9 +24,12 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    component: HomeComponent,
-    pathMatch: 'full',
-    canActivate: [AuthGuard]
+    redirectTo: ''
+  },
+  {
+    path: 'questions/ask',
+    component: AskQuestionComponent,
+    canActivate: [AuthGuard] 
   },
   {
     path: '**',
