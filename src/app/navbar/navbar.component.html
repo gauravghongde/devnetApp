@@ -22,8 +22,8 @@
         <ul class="navbar-nav">
             <li class="nav-item">
                 <form class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" type="search" id="search-box" (blur)="status = false" (click)="status = true" [ngClass]="status ? 'search-expand': 'search-collapse'" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-hollow-color-yellow my-2 my-sm-0" type="submit">Search</button>
+                    <input class="form-control mr-sm-2" type="search" [(ngModel)]="searchQuery" (keyup.enter)="doSearch()" name="search-box" id="search-box" (blur)="status = false" (click)="status = true" [ngClass]="status ? 'search-expand': 'search-collapse'" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-hollow-color-yellow my-2 my-sm-0" (click)="doSearch()" type="submit">Search</button>
                 </form>
             </li>
             <li *ngIf="!(currentUser$ | async)" class="nav-item">
