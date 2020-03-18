@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { User } from '../constants/app.constants';
-import { AuthService } from '../_services/auth.service';
-import { QuestionService } from '../services/question.service';
+import { AuthService } from 'src/app/authentication/auth.service';
+import { User } from 'src/app/utilities/constants/app.constants';
 
 @Component({
   selector: 'app-navbar',
@@ -19,7 +19,7 @@ export class NavbarComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private questionService: QuestionService
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -28,11 +28,8 @@ export class NavbarComponent implements OnInit {
     this.currentUser$ = this.currentUserSubj.asObservable();
   }
 
-  doSearch() {
-    if (this.searchQuery) {
-      // encodeURIComponent(this.searchQuery.trim())
-      this.questionService.searchQuestion(this.searchQuery).subscribe(questionObjArr => console.log(questionObjArr));
-    }
+  onSearch() {
+    this.router.navigate(['/search'], { queryParams: { query: this.searchQuery } });
   }
 
   logout() {
