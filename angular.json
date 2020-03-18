@@ -29,7 +29,7 @@
             ],
             "styles": [
               "src/styles.scss",
-              "src/app/shared/prism/prism-ghcolors.css",
+              "src/app/utilities/prism/prism-ghcolors.css",
               "./node_modules/bootstrap-markdown/css/bootstrap-markdown.min.css",
               "./node_modules/prismjs/plugins/line-numbers/prism-line-numbers.css",
               "./node_modules/prismjs/plugins/line-highlight/prism-line-highlight.css",

@@ -2,15 +2,16 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './authentication/login/login.component';
 import { RegisterComponent } from './authentication/register/register.component';
-import { AuthGuard } from './guards/auth.guard';
-import { HomeComponent } from './home/home.component';
-import { AskQuestionComponent } from './components/ask-question/ask-question.component';
-
+import { AuthGuard } from './_guards/auth.guard';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { HomepageComponent } from './home/homepage/homepage.component';
+import { AskQuestionComponent } from './qna/ask-question/ask-question.component';
+import { SearchResultsComponent } from './search/search-results/search-results.component';
 
 const routes: Routes = [
   { 
     path: '', 
-    component: HomeComponent,
+    component: HomepageComponent,
     pathMatch: 'full',
     canActivate: [AuthGuard] 
   },
@@ -27,13 +28,25 @@ const routes: Routes = [
     redirectTo: ''
   },
   {
-    path: 'questions/ask',
-    component: AskQuestionComponent,
-    canActivate: [AuthGuard] 
+    path: 'questions',
+    children: [
+      {
+        path: 'ask',
+        component: AskQuestionComponent
+      },
+      {
+        path: '',
+        component: PageNotFoundComponent
+      }
+    ]
+  },
+  {
+    path: 'search',
+    component: SearchResultsComponent
   },
   {
     path: '**',
-    redirectTo: ''
+    component: PageNotFoundComponent
   }
 ];
 

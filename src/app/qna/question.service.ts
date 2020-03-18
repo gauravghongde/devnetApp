@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
 // const httpOptions = {
@@ -26,7 +26,9 @@ export class QuestionService {
   constructor(private http: HttpClient) { }
 
   postQuestion(questionReq: any): Observable<any> {
-    return this.http.post(this.postQuestionUrl, questionReq).pipe();
+    return this.http.post<any>(this.postQuestionUrl, questionReq).pipe(map(obj => {
+        return obj;
+    }));
   }
 
   searchQuestion(searchQuery: string) {

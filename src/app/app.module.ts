@@ -1,38 +1,44 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-
-import { AppComponent } from './app.component';
-import { RegisterComponent } from './authentication/register/register.component';
-import { LoginComponent } from './authentication/login/login.component';
-import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { JwtInterceptor } from './_helpers/jwt.interceptor';
-import { ErrorInterceptor } from './_helpers/error.interceptor';
-import { HomeComponent } from './home/home.component';
-import { NavbarComponent } from './navbar/navbar.component';
-import { LoaderComponent } from './shared/loader/loader.component';
-import { AskQuestionComponent } from './components/ask-question/ask-question.component';
-import { MarkdownModule } from 'ngx-markdown';
+import { BrowserModule } from '@angular/platform-browser';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { AuthService } from './authentication/auth.service';
+import { LoginComponent } from './authentication/login/login.component';
+import { RegisterComponent } from './authentication/register/register.component';
+import { HomeModule } from './home/home.module';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { ProfileModule } from './profile/profile.module';
+import { QnaModule } from './qna/qna.module';
+import { SearchModule } from './search/search.module';
+import { SharedModule } from './shared/shared.module';
+import { AuthGuard } from './_guards/auth.guard';
+import { ErrorInterceptor } from './_interceptors/error.interceptor';
+import { JwtInterceptor } from './_interceptors/jwt.interceptor';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     RegisterComponent,
     LoginComponent,
-    HomeComponent,
-    NavbarComponent,
-    LoaderComponent,
-    AskQuestionComponent
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     AppRoutingModule,
     HttpClientModule,
-    MarkdownModule.forRoot(),
+    SharedModule,
+    HomeModule,
+    QnaModule,
+    ProfileModule,
+    SearchModule
   ],
   providers: [
+    AuthService,
+    AuthGuard,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],

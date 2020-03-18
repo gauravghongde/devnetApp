@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   // apiUrl: 'http://localhost:8080'
-  apiUrl: 'https://rstack-devnet.herokuapp.com'
+  apiUrl: 'http://rstack-devnet.herokuapp.com'
 };
 
 /*
