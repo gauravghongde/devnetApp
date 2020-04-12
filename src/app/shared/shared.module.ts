@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { LoaderComponent } from './loader/loader.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FormsModule } from '@angular/forms';
+import { VoteBadgeComponent } from './vote-badge/vote-badge.component';
 
 
 
 @NgModule({
-  declarations: [LoaderComponent,NavbarComponent],
+  declarations: [LoaderComponent,NavbarComponent, VoteBadgeComponent],
   imports: [
     CommonModule,
     FormsModule
@@ -15,6 +16,7 @@ import { FormsModule } from '@angular/forms';
   exports: [
     LoaderComponent,
     NavbarComponent,
+    VoteBadgeComponent
   ]
 })
 export class SharedModule { }

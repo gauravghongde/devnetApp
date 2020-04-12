@@ -1,1 +1,42 @@
-<p>search-results works!</p>
+<div class="p-3">
+    <h3>Search Results</h3>
+    <hr/>
+    <div class="col">
+        <ng-container *ngFor="let questionObj of searchResultObj">
+            <div class="row">
+                <div class="col">
+                    <div class="badge badge-vote-count p-2 mr-1 mb-2">
+                        {{questionToUpVotesMap.get(questionObj.postId)}} Votes
+                    </div>
+                    <div class="badge badge-answers-count p-2 ml-1 mb-2">
+                        {{questionToNoOfAnswersMap.get(questionObj.postId)}} Answers
+                    </div>
+
+                    <div class="question-header">
+                        <a href="http://localhost:4200/questions/{{questionObj.postId}}/{{questionObj.questionHeader}}">
+                            {{questionObj.questionHeader}}
+                        </a>
+                    </div>
+                    <div class="question-body">
+                        <p>
+                            {{ (questionObj.questionBody.length>250)? (questionObj.questionBody | slice:0:250)+'…':(questionObj.questionBody) }}
+                        </p>
+                        <div style="text-align: right;">
+                            - Posted at {{questionObj.postedAt | date}} by
+                            <a href="/users/{{questionObj.postedBy}}">
+                                {{questionObj.postedBy}}
+                            </a>
+                        </div>
+                    </div>
+                    <hr/>
+                </div>
+                <div class="col-md-2">
+                    <div class="badge">
+
+                    </div>
+                </div>
+                
+            </div>
+        </ng-container>
+    </div>
+</div>

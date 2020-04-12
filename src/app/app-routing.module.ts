@@ -7,6 +7,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { HomepageComponent } from './home/homepage/homepage.component';
 import { AskQuestionComponent } from './qna/ask-question/ask-question.component';
 import { SearchResultsComponent } from './search/search-results/search-results.component';
+import { ViewQuestionComponent } from './qna/view-question/view-question.component';
 
 const routes: Routes = [
   { 
@@ -33,6 +34,10 @@ const routes: Routes = [
       {
         path: 'ask',
         component: AskQuestionComponent
+      },
+      {
+        path: ":qId/:qHeader",
+        component: ViewQuestionComponent 
       },
       {
         path: '',

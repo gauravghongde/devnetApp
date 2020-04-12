@@ -1,0 +1,12 @@
+@import "../../utilities/shared_variables.scss";
+
+.badge {
+}
+
+.badge-vote-count {
+    background-color: $dn-yellow-fade;
+}
+
+.badge-answers-count {
+    background-color: $dn-green-fade;
+}
