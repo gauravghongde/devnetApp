@@ -73,6 +73,18 @@ body {
     color: whitesmoke;
 }
 
+.btn-color-green {
+    border-color: $dn-green;
+    background-color: $dn-green;
+    color: whitesmoke;
+}
+
+.btn-color-green:hover {
+    border-color: $dn-green;
+    background-color: transparent;
+    color: $dn-green;
+}
+
 .btn-hollow-color-pink {
     border-color: $dn-pink;
     background-color: transparent;

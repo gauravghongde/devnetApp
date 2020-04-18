@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { QNA_MOCK } from '../qna-mock';
 import { QuestionService } from '../question.service';
+import { AnswerService } from '../answer.service';
 
 @Component({
   selector: 'app-view-question',
@@ -18,7 +19,7 @@ export class ViewQuestionComponent implements OnInit {
   public currentUpvotes: number = 0;
   public currentDownvotes: number = 0;
 
-  public isAnswerWindowOpen:boolean = false;
+  public isAnswerWindowOpen:boolean = true;
 
   questionTitle: string = "";
   questionBody: string = "";
@@ -26,7 +27,8 @@ export class ViewQuestionComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private questionService: QuestionService
+    private questionService: QuestionService,
+    private answerService: AnswerService
   ) { }
 
   // To call router:
@@ -44,18 +46,29 @@ export class ViewQuestionComponent implements OnInit {
 
   showQuestion(questionId: string, questionHeader: string) {
     this.questionService.getQueWithAns(questionId, questionHeader).subscribe((queWithAnsRes: any) => {
-      queWithAnsRes = QNA_MOCK;
+      // queWithAnsRes = QNA_MOCK;
       console.log(queWithAnsRes);
       this.questionObj = queWithAnsRes.question;
       this.answerObjList = queWithAnsRes.listOfAnswers;
       // this.currentUpvotes = +this.questionObj.upVotes; //parseInt(this.questionObj.upVotes)
       // this.currentDownvotes = +this.questionObj
+      if(this.answerObjList.length == 0) {
+        this.isAnswerWindowOpen = false;
+      }
     });
 
+    
     // let queWithAnsRes = QNA_MOCK;
     // console.log(queWithAnsRes);
     // this.questionObj = queWithAnsRes.question;
     // this.answerObjList = queWithAnsRes.listOfAnswers;
+  }
+
+  submitAnswerClicked(contentBody: String, questionId: String) {
+    if (contentBody.length >= 50) {
+        this.answerService.postAnswer({contentBody},questionId).subscribe(answerObj => console.log("posted ans request -> ", answerObj));
+        window.location.reload();
+    }
   }
 
 }

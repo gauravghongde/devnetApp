@@ -4,11 +4,11 @@
             <div class="card">
                 <div class="row py-4 mx-4">
                     <app-vote-badge [currentUpvotes]="+questionObj.upVotes" [currentDownvotes]="+questionObj.downVotes"
-                        [currentVoteStatus]="+questionObj.voteStatus" [contentId]="questionObj.postId">
+                        [currentVoteStatus]="+questionObj.voteStatus" [postId]="questionObj.postId" [commentId]="" [usersInteracted]="questionObj.usersInteracted">
                     </app-vote-badge>
                     <div class="col pl-4 pr-0" style="min-width: 80%;">
                         <div class="row p-0 m-0 mb-3 word-warp">
-                            <p class="text-muted">Views: 124k, Answers: 12 </p>
+                            <p class="text-muted">Views: 124k, Answers: {{answerObjList.length}} </p>
                             <h4>{{questionObj.questionHeader}}</h4>
                             <hr />
                             <div class="markdown-content">
@@ -30,7 +30,7 @@
                             <ng-container *ngFor="let comment of questionObj.commentObj">
                                 <div class="row py-0 mx-0 comment-body">
                                     <app-vote-badge [currentUpvotes]="+comment.upVotes" [currentDownvotes]="+comment.downVotes"
-                                        [currentVoteStatus]="+comment.voteStatus" [contentId]="comment.commentId">
+                                        [currentVoteStatus]="+comment.voteStatus" [postId]="questionObj.postId" [commentId]="comment.commentId" [usersInteracted]="comment.usersInteracted">
                                     </app-vote-badge>
                                     <div class="col pl-4 pr-0" style="min-width: 85%;">
                                         <!-- Scrape away new line chars from commentBody +' - **'+comment.byUser+'**' -->
@@ -54,7 +54,7 @@
         <div class="col-md-3"></div>
     </div>
     <!-- answer section -->
-    <ng-container *ngIf="answerObjList.length == 0">
+    <ng-container *ngIf="answerObjList.length == 0 && !isAnswerWindowOpen">
         <!-- No Answer Warning-->
         <div class="row py-4 mx-4">
             <h5 class="text-muted m-0">No Answers yet! Would you like to write one
@@ -62,14 +62,14 @@
             </h5>
         </div>
     </ng-container>
-    <ng-container *ngIf="answerObjList.length > 0">
-        <h4>Answers</h4>
+    <ng-container>
+        <h4 *ngIf="answerObjList.length > 0">Answers</h4>
         <div *ngFor="let answerObj of answerObjList" class="row">
             <div class="col-md-9">
                 <div class="card">
                     <div class="row py-4 mx-4">
                         <app-vote-badge [currentUpvotes]="+answerObj.upVotes" [currentDownvotes]="+answerObj.downVotes"
-                            [currentVoteStatus]="+answerObj.voteStatus" [contentId]="answerObj.postId">
+                            [currentVoteStatus]="+answerObj.voteStatus" [postId]="answerObj.postId" [commentId]="" [usersInteracted]="answerObj.usersInteracted" >
                         </app-vote-badge>
                         <div class="col pl-4 pr-0" style="min-width: 80%;">
                             <div class="row p-0 m-0 mb-3 word-warp">
@@ -81,7 +81,7 @@
                                 </div>
                                 <div class="author-card row p-0 m-0">
                                     <a href="" class="p-2">
-                                        <img src="/assets/photo.jpg" alt="" width="38" height="38" class="bar-sm">
+                                        <img src="https://www.gravatar.com/avatar/147c5a9cc1feec049c50da791ac7d144?s=388&d=identicon" alt="" width="38" height="38" class="bar-sm">
                                     </a>
                                     <div class="px-2 pt-2 author-username">
                                         <a href="/users/{{answerObj.postedBy}}"><b>{{answerObj.postedBy}}</b></a>
@@ -95,7 +95,7 @@
                                 <ng-container *ngFor="let comment of answerObj.commentObj">
                                     <div class="row py-0 mx-0 comment-body">
                                         <app-vote-badge [currentUpvotes]="+comment.upVotes" [currentDownvotes]="+comment.downVotes"
-                                            [currentVoteStatus]="+comment.voteStatus" [contentId]="comment.commentId">
+                                            [currentVoteStatus]="+comment.voteStatus" [postId]="answerObj.postId" [commentId]="comment.commentId" [usersInteracted]="comment.usersInteracted">
                                         </app-vote-badge>
                                         <div class="col pl-4 pr-0" style="min-width: 85%;">
                                             <!-- Scrape away new line chars from commentBody +' - **'+comment.byUser+'**' -->
@@ -117,32 +117,34 @@
             </div>
         </div>
         <!-- write answer section -->
-        <div class="row">
+        <div class="row" *ngIf="isAnswerWindowOpen">
             <div class="col-md-9">
                 <div class="card">
                     <div class="row py-4 mx-4">
-                        <form>
-                            <div class="card">
-                                <div class="card-header form-group">
+                        <form class="form-group answer-body">
+                            <label for="answerBody"><h5>Write your answer here -</h5></label>
+                            <nav class="pull-right pr-1">
+                                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                  <a class="nav-item nav-link active" id="nav-edit-tab" data-toggle="tab" href="#nav-edit" role="tab" aria-controls="nav-home" aria-selected="true">Edit</a>
+                                  <a class="nav-item nav-link" id="nav-preview-tab" data-toggle="tab" href="#nav-preview" role="tab" aria-controls="nav-contact" aria-selected="false">Preview</a>
                                 </div>
-                                <div class="card-body form-group">
-                                    <label for="questionBody">Enter some description (you can include code)</label>
-                                    <textarea class="form-control variable-textarea" [(ngModel)]="markdown" name="questionBody" rows="4"></textarea>
+                              </nav>
+                              <div class="tab-content border rounded" id="nav-tabContent">
+                                <div class="tab-pane fade show active" id="nav-edit" role="tabpanel" aria-labelledby="nav-edit-tab">
+                                    <textarea class="form-control variable-textarea" [(ngModel)]="markdown" name="answerBody" rows="6"></textarea>
                                 </div>
-                            </div>
+                                <div class="tab-pane fade" id="nav-preview" role="tabpanel" aria-labelledby="nav-preview-tab">
+                                    <div class="word-warp border rounded px-3 py-2 preview-answer">
+                                        <p *ngIf="!markdown" class="text-muted">
+                                            It seems you haven't written anything.
+                                            Type something to see the preview here!!
+                                        </p>
+                                        <markdown class="variable-binding" [data]="markdown"></markdown>
+                                    </div>
+                                </div>
+                              </div>
                         </form>
-                    </div>
-                    <div class="row py-4 mx-4">
-                        <div class="card">
-                            <div class="card-header">
-                                <b>Preview</b>
-                            </div>
-                            <div class="card-body word-warp">
-                            </div>
-                            <div class="card-footer">
-                                <!-- <button class="btn my-2 my-sm-0" (click)="" type="">Submit</button> -->
-                            </div>
-                        </div>
+                        <button class="btn btn-color-green my-2 my-sm-0" (click)="submitAnswerClicked(markdown, questionObj.postId)" type="submit">Submit</button>
                     </div>
                 </div>
             </div>

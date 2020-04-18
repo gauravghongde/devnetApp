@@ -37,7 +37,7 @@ export class SearchResultsComponent implements OnInit {
         this.searchResultObj = questionObjArr.body;
         this.searchResultObj.forEach(questionObj => {
           questionObj.questionBody = questionObj.questionBody.replace(/[^a-zA-Z ?.:,]/g, "");
-          this.questionToNoOfAnswersMap.set(questionObj.postId, !isNullOrUndefined(questionObj.listOfAnswers) ? (questionObj.listOfAnswers.length).toString() : "0");          
+          this.questionToNoOfAnswersMap.set(questionObj.postId, !isNullOrUndefined(questionObj.listOfAnswers) ? (questionObj.listOfAnswers.length()).toString() : "0");          
           this.questionToUpVotesMap.set(questionObj.postId, (parseInt(questionObj.upVotes) - parseInt(questionObj.downVotes)).toString());
         });
       });
