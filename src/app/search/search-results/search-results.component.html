@@ -13,7 +13,7 @@
                     </div>
 
                     <div class="question-header">
-                        <a href="/questions/{{questionObj.postId}}/{{questionObj.questionHeader}}">
+                        <a routerLink="/questions/{{ questionObj.postId }}/{{ questionObj.questionHeader }}">
                             {{questionObj.questionHeader}}
                         </a>
                     </div>
@@ -23,7 +23,7 @@
                         </p>
                         <div style="text-align: right;">
                             - Posted at {{questionObj.postedAt | date}} by
-                            <a href="/users/{{questionObj.postedBy}}">
+                            <a routerLink="/users/{{ questionObj.postedBy }}">
                                 {{questionObj.postedBy}}
                             </a>
                         </div>
