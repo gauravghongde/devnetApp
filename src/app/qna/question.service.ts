@@ -21,7 +21,7 @@ export class QuestionService {
   // private handleError: HandleError;
   postQuestionUrl: string = `${environment.apiUrl}/questions/post`;
   searchQuestionUrl: string = `${environment.apiUrl}/search`
-  getQuestionUrl: string = "";
+  getQuestionUrl: string = `${environment.apiUrl}/questions/`;
 
   constructor(private http: HttpClient) { }
 
@@ -44,8 +44,8 @@ export class QuestionService {
     return throwError(error.message || "server error.");
   }
 
-  getQuestion() {
-    return this.http.get(this.getQuestionUrl);
+  getQueWithAns(questionId: string, questionHeader: string) {
+    return this.http.get(this.getQuestionUrl + questionId + "/" + questionHeader);
   }
 
   // addHero (hero: Hero): Observable<Hero> {

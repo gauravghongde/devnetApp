@@ -1,1 +1,189 @@
-<p>view-question works!</p>
+<div class="mt-4 mx-4 px-2">
+    <div class="row">
+        <div class="col-md-9">
+            <div class="card">
+                <div class="row py-4 mx-4">
+                    <app-vote-badge [currentUpvotes]="+questionObj.upVotes" [currentDownvotes]="+questionObj.downVotes"
+                        [currentVoteStatus]="+questionObj.voteStatus" [postId]="questionObj.postId" [commentId]="" [usersInteracted]="questionObj.usersInteracted">
+                    </app-vote-badge>
+                    <div class="col pl-4 pr-0" style="min-width: 80%;">
+                        <div class="row p-0 m-0 mb-3 word-warp">
+                            <p class="text-muted">Views: 124k, Answers: {{answerObjList.length}} </p>
+                            <h4>{{questionObj.questionHeader}}</h4>
+                            <hr />
+                            <div class="markdown-content">
+                                <markdown class="variable-binding" [data]="questionObj.questionBody"></markdown>
+                            </div>
+                            <div class="author-card row p-0 m-0">
+                                <a href="" class="p-2">
+                                    <img src="/assets/photo.jpg" alt="" width="38" height="38" class="bar-sm">
+                                </a>
+                                <div class="px-2 pt-2 author-username">
+                                    <a href="/users/{{questionObj.postedBy}}"><b>{{questionObj.postedBy}}</b></a>
+                                <br/>
+                                    <p class="m-0 font-13 author-date">{{questionObj.postedAt | date}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="comment-seperator"/>
+                        <div class="row py-0 m-0">
+                            <ng-container *ngFor="let comment of questionObj.commentObj">
+                                <div class="row py-0 mx-0 comment-body">
+                                    <app-vote-badge [currentUpvotes]="+comment.upVotes" [currentDownvotes]="+comment.downVotes"
+                                        [currentVoteStatus]="+comment.voteStatus" [postId]="questionObj.postId" [commentId]="comment.commentId" [usersInteracted]="comment.usersInteracted">
+                                    </app-vote-badge>
+                                    <div class="col pl-4 pr-0" style="min-width: 85%;">
+                                        <!-- Scrape away new line chars from commentBody +' - **'+comment.byUser+'**' -->
+                                        <!-- <markdown class="p-0 m-0" [data]="comment.commentBody"></markdown> -->
+                                        <p class="my-2">{{comment.commentBody}} – 
+                                            <a href="/users/{{comment.byUser}}">
+                                                <span *ngIf="comment.byUser == questionObj.postedBy" class="badge badge-secondary px-2 comment-author-badge">{{comment.byUser}}</span>
+                                                <span *ngIf="comment.byUser != questionObj.postedBy" class="">{{comment.byUser}}</span>
+                                            </a>
+                                        </p> 
+                                    </div>  
+                                </div>
+                                <hr class="comment-seperator"/>  
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+                <hr class="comment-seperator"/>  
+            </div>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+    <!-- answer section -->
+    <ng-container *ngIf="answerObjList.length == 0 && !isAnswerWindowOpen">
+        <!-- No Answer Warning-->
+        <div class="row py-4 mx-4">
+            <h5 class="text-muted m-0">No Answers yet! Would you like to write one
+            <button class="btn btn-hollow-color-green my-2 my-sm-0" (click)="isAnswerWindowOpen = true" >Write An Answer</button>
+            </h5>
+        </div>
+    </ng-container>
+    <ng-container>
+        <h4 *ngIf="answerObjList.length > 0">Answers</h4>
+        <div *ngFor="let answerObj of answerObjList; let i=index;" class="row">
+            <div class="col-md-9">
+                <div class="card">
+                    <div class="row py-4 mx-4">
+                        <app-vote-badge [currentUpvotes]="+answerObj.upVotes" [currentDownvotes]="+answerObj.downVotes"
+                            [currentVoteStatus]="+answerObj.voteStatus" [postId]="answerObj.postId" [commentId]="" [usersInteracted]="answerObj.usersInteracted" >
+                        </app-vote-badge>
+                        <div class="col pl-4 pr-0" style="min-width: 80%;">
+                            <div class="row p-0 m-0 mb-3 word-warp">
+                                <p class="text-muted">Views: 124k, Answers: 12 </p>
+                                <h4>{{answerObj.questionHeader}}</h4>
+                                <hr />
+                                <div class="markdown-content">
+                                    <markdown class="variable-binding" [data]="answerObj.answerBody"></markdown>
+                                </div>
+                                <div class="author-card row p-0 m-0">
+                                    <a href="" class="p-2">
+                                        <img src="https://www.gravatar.com/avatar/147c5a9cc1feec049c50da791ac7d144?s=388&d=identicon" alt="" width="38" height="38" class="bar-sm">
+                                    </a>
+                                    <div class="px-2 pt-2 author-username">
+                                        <a href="/users/{{answerObj.postedBy}}"><b>{{answerObj.postedBy}}</b></a>
+                                    <br/>
+                                        <p class="m-0 font-13 author-date">{{answerObj.postedAt | date}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="comment-seperator"/>  
+                            <div class="row py-0 m-0">
+                                <ng-container *ngFor="let comment of answerObj.commentObj">
+                                    <div class="row py-0 mx-0 comment-body">
+                                        <app-vote-badge [currentUpvotes]="+comment.upVotes" [currentDownvotes]="+comment.downVotes"
+                                            [currentVoteStatus]="+comment.voteStatus" [postId]="answerObj.postId" [commentId]="comment.commentId" [usersInteracted]="comment.usersInteracted">
+                                        </app-vote-badge>
+                                        <div class="col pl-4 pr-0" style="min-width: 85%;">
+                                            <!-- Scrape away new line chars from commentBody +' - **'+comment.byUser+'**' -->
+                                            <!-- <markdown class="p-0 m-0" [data]="comment.commentBody"></markdown> -->
+                                            <p class="my-2">{{comment.commentBody}} – 
+                                                <a href="/users/{{comment.byUser}}">
+                                                    <span *ngIf="comment.byUser == answerObj.postedBy" class="badge badge-secondary px-2 comment-author-badge">{{comment.byUser}}</span>
+                                                    <span *ngIf="comment.byUser != answerObj.postedBy" class="">{{comment.byUser}}</span>
+                                                </a>
+                                            </p> 
+                                        </div>  
+                                    </div>
+                                    <hr class="comment-seperator"/>  
+                                </ng-container>
+                                <!-- 
+                                    
+                                    WIP: Show comment as soon as submitted without reloading
+                                    TODO: 1.Get the comment submitted as response, 2.use it here
+                                    
+                                    <ng-container *ngIf="isCommentSubmitted">
+                                    <div class="row py-0 mx-0 comment-body">
+                                        <app-vote-badge [currentUpvotes]="+0" [currentDownvotes]="+0"
+                                            [currentVoteStatus]="+comment.voteStatus" [postId]="answerObj.postId" [commentId]="comment.commentId" [usersInteracted]="comment.usersInteracted">
+                                        </app-vote-badge>
+                                        <div class="col pl-4 pr-0" style="min-width: 85%;">
+                                            <p class="my-2">{{comment.commentBody}} – 
+                                                <a href="/users/{{comment.byUser}}">
+                                                    <span *ngIf="comment.byUser == answerObj.postedBy" class="badge badge-secondary px-2 comment-author-badge">{{comment.byUser}}</span>
+                                                    <span *ngIf="comment.byUser != answerObj.postedBy" class="">{{comment.byUser}}</span>
+                                                </a>
+                                            </p> 
+                                        </div>  
+                                    </div>
+                                    <hr class="comment-seperator"/>  
+                                </ng-container> -->
+                                <ng-container>
+                                    <form class="my-3 maxout-min-width">
+                                        <a data-toggle="collapse" href="{{'#multiCollapseExample'+i}}"><b>Add a comment</b></a>
+                                        <div id="{{'multiCollapseExample'+i}}" class="row py-0 mx-0 comment-body collapse multi-collapse">
+                                            <div class="col pl-0 my-3 pr-3 maxout-min-width form-group" >
+                                                <textarea class="form-control variable-textarea" [(ngModel)]="commentData" name="commentTextArea" rows="2"></textarea>
+                                            </div>
+                                            <button class="btn btn-color-green my-2 my-sm-0" (click)="submitCommentClicked(answerObj.postId)" type="submit">Submit</button>
+                                            <div *ngIf="commentData.length <= charLimits.MIN_CHAR_LIMIT_COMMENT || commentData.length > charLimits.MAX_CHAR_LIMIT_COMMENT" class="p-2 text-danger">  {{commentData.length}}/{{charLimits.MAX_CHAR_LIMIT_COMMENT}} characters</div>
+                                            <div *ngIf="commentData.length > charLimits.MIN_CHAR_LIMIT_COMMENT && commentData.length <= charLimits.MAX_CHAR_LIMIT_COMMENT" class="p-2 text-success">  {{commentData.length}}/{{charLimits.MAX_CHAR_LIMIT_COMMENT}} characters</div>
+                                            <div class="alert alert-danger dn-alert-danger" *ngIf="isCmtError">{{errMsg}}</div>
+                                        </div>
+                                    </form>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- write answer section -->
+        <div class="row" *ngIf="isAnswerWindowOpen">
+            <div class="col-md-9">
+                <div class="card">
+                    <div class="row py-4 mx-4">
+                        <form class="form-group answer-body">
+                            <label for="answerBody"><h5>Write your answer here -</h5></label>
+                            <nav class="pull-right pr-1">
+                                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                  <a class="nav-item nav-link active" id="nav-edit-tab" data-toggle="tab" href="#nav-edit" role="tab" aria-controls="nav-home" aria-selected="true">Edit</a>
+                                  <a class="nav-item nav-link" id="nav-preview-tab" data-toggle="tab" href="#nav-preview" role="tab" aria-controls="nav-contact" aria-selected="false">Preview</a>
+                                </div>
+                              </nav>
+                              <div class="tab-content border rounded" id="nav-tabContent">
+                                <div class="tab-pane fade show active" id="nav-edit" role="tabpanel" aria-labelledby="nav-edit-tab">
+                                    <textarea class="form-control variable-textarea" [(ngModel)]="answerData" name="answerBody" rows="8"></textarea>
+                                </div>
+                                <div class="tab-pane fade" id="nav-preview" role="tabpanel" aria-labelledby="nav-preview-tab">
+                                    <div class="word-warp border rounded px-3 py-2 preview-answer">
+                                        <p *ngIf="!answerData" class="text-muted">
+                                            It seems you haven't written anything.
+                                            Type something to see the preview here!!
+                                        </p>
+                                        <markdown class="variable-binding" [data]="answerData"></markdown>
+                                    </div>
+                                </div>
+                              </div>
+                        </form>
+                        <button class="btn btn-color-green my-2 my-sm-0" (click)="submitAnswerClicked(questionObj.postId)" type="submit">Submit</button>
+                        <div class="alert alert-danger dn-alert-danger" *ngIf="isAnsError">{{errMsg}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+</div>

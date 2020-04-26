@@ -1,3 +1,10 @@
+export class CharLimits {
+    MIN_CHAR_LIMIT_COMMENT: number = 10;
+    MAX_CHAR_LIMIT_COMMENT: number = 300;
+    MIN_CHAR_LIMIT_ANSWER: number = 50;
+    MAX_CHAR_LIMIT_ANSWER: number = 80000;
+}
+
 export class ResponseTypes {
     static SUCCESS = 'SUCCESS';
     static FAILED = 'FAILED';

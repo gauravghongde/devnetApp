@@ -1,0 +1,33 @@
+.vote-btn {
+    color: inherit;
+    cursor: pointer;
+}
+
+.pull-left {
+    float:left;
+}
+
+.pull-right {
+    float: right;
+}
+
+.vote-icon {
+    font-size: 3rem;
+    transition: font-size 0.2s ease;
+}
+
+.vote-icon:hover{
+    font-size: 3.2rem;
+    transition: font-size 0.2s ease;
+}
+
+.vote-icon-comment {
+    font-size: 1.3rem;
+    transition: font-size 0.2s ease;
+}
+
+.vote-icon-comment:hover{
+    font-size: 1.4rem;
+    transition: font-size 0.2s ease;
+}
+
