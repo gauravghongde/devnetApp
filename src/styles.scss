@@ -140,3 +140,16 @@ h1,h2,h3,h4 {
     font-weight: 900;
 }
 
+.dn-alert-danger{
+    padding: 8px;
+    margin: 0px;
+    border: 1px solid #f5c6cb;
+    background-color: #f8d7da;
+    border-left-width: 3px;
+    border-left-color: #ca4d59;
+}
+
+textarea {
+    font-size: medium !important;
+    font-family: monospace;
+}

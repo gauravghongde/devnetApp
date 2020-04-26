@@ -3,6 +3,8 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { QNA_MOCK } from '../qna-mock';
 import { QuestionService } from '../question.service';
 import { AnswerService } from '../answer.service';
+import { CommentService } from '../comment.service';
+import { CharLimits } from 'src/app/utilities/constants/app.constants';
 
 @Component({
   selector: 'app-view-question',
@@ -20,15 +22,24 @@ export class ViewQuestionComponent implements OnInit {
   public currentDownvotes: number = 0;
 
   public isAnswerWindowOpen:boolean = true;
+  public isCommentSubmitted: boolean = false;
 
   questionTitle: string = "";
   questionBody: string = "";
-  markdown: string;
+  answerData: string = "";
+  commentData: string = "";
+
+  isAnsError:boolean = false;
+  isCmtError:boolean = false;
+  errMsg:string;
+  
+  charLimits:CharLimits;
 
   constructor(
     private route: ActivatedRoute,
     private questionService: QuestionService,
-    private answerService: AnswerService
+    private answerService: AnswerService,
+    private commentService: CommentService
   ) { }
 
   // To call router:
@@ -37,6 +48,7 @@ export class ViewQuestionComponent implements OnInit {
   // { path: 'myUrlpath/:id1/:id2', component: componentToGoTo},
 
   ngOnInit(): void {
+    this.charLimits = new CharLimits();
     this.route.params.subscribe(
       (params: Params) => {
         console.log(params);
@@ -64,11 +76,44 @@ export class ViewQuestionComponent implements OnInit {
     // this.answerObjList = queWithAnsRes.listOfAnswers;
   }
 
-  submitAnswerClicked(contentBody: String, questionId: String) {
-    if (contentBody.length >= 50) {
-        this.answerService.postAnswer({contentBody},questionId).subscribe(answerObj => console.log("posted ans request -> ", answerObj));
-        window.location.reload();
+  submitAnswerClicked(questionId: String) {
+    if (this.answerData.length >= this.charLimits.MIN_CHAR_LIMIT_ANSWER 
+      && this.answerData.length <= this.charLimits.MAX_CHAR_LIMIT_ANSWER ) {
+      this.isAnsError = false;
+      let contentBody: string = this.answerData;
+      this.answerService.postAnswer({contentBody},questionId).subscribe(answerRes => console.log("posted ans response -> ", answerRes));
+      window.location.reload();
+    }
+    else if (this.answerData.length > this.charLimits.MAX_CHAR_LIMIT_ANSWER) {
+      this.isAnsError = true;
+      this.errMsg = "Answer is too big !!!"
+    }
+    else if (this.answerData.length < this.charLimits.MIN_CHAR_LIMIT_ANSWER) {
+      this.isAnsError = true;
+      this.errMsg = "Answer is too short !!!"
     }
   }
 
+  submitCommentClicked(postId: String) {
+    if (this.commentData.length >= this.charLimits.MIN_CHAR_LIMIT_COMMENT 
+      && this.commentData.length <= this.charLimits.MAX_CHAR_LIMIT_COMMENT) {
+      this.isCmtError = false;
+      let commentBody: string = this.commentData;
+      this.commentService.addComment({commentBody},postId).subscribe(commentRes => {
+        console.log("posted comment response -> ", commentRes);
+        if(commentRes) {
+          this.isCommentSubmitted = true;
+        }
+      });
+      
+    }
+    else if (this.commentData.length > this.charLimits.MAX_CHAR_LIMIT_COMMENT) {
+      this.isCmtError = true;
+      this.errMsg = "Comment is too big!!!"
+    }
+    else if (this.commentData.length < this.charLimits.MIN_CHAR_LIMIT_COMMENT) {
+      this.isCmtError = true;
+      this.errMsg = "Comment is too short!!!"
+    }
+  }
 }

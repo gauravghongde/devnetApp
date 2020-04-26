@@ -64,7 +64,7 @@
     </ng-container>
     <ng-container>
         <h4 *ngIf="answerObjList.length > 0">Answers</h4>
-        <div *ngFor="let answerObj of answerObjList" class="row">
+        <div *ngFor="let answerObj of answerObjList; let i=index;" class="row">
             <div class="col-md-9">
                 <div class="card">
                     <div class="row py-4 mx-4">
@@ -110,6 +110,41 @@
                                     </div>
                                     <hr class="comment-seperator"/>  
                                 </ng-container>
+                                <!-- 
+                                    
+                                    WIP: Show comment as soon as submitted without reloading
+                                    TODO: 1.Get the comment submitted as response, 2.use it here
+                                    
+                                    <ng-container *ngIf="isCommentSubmitted">
+                                    <div class="row py-0 mx-0 comment-body">
+                                        <app-vote-badge [currentUpvotes]="+0" [currentDownvotes]="+0"
+                                            [currentVoteStatus]="+comment.voteStatus" [postId]="answerObj.postId" [commentId]="comment.commentId" [usersInteracted]="comment.usersInteracted">
+                                        </app-vote-badge>
+                                        <div class="col pl-4 pr-0" style="min-width: 85%;">
+                                            <p class="my-2">{{comment.commentBody}} – 
+                                                <a href="/users/{{comment.byUser}}">
+                                                    <span *ngIf="comment.byUser == answerObj.postedBy" class="badge badge-secondary px-2 comment-author-badge">{{comment.byUser}}</span>
+                                                    <span *ngIf="comment.byUser != answerObj.postedBy" class="">{{comment.byUser}}</span>
+                                                </a>
+                                            </p> 
+                                        </div>  
+                                    </div>
+                                    <hr class="comment-seperator"/>  
+                                </ng-container> -->
+                                <ng-container>
+                                    <form class="my-3 maxout-min-width">
+                                        <a data-toggle="collapse" href="{{'#multiCollapseExample'+i}}"><b>Add a comment</b></a>
+                                        <div id="{{'multiCollapseExample'+i}}" class="row py-0 mx-0 comment-body collapse multi-collapse">
+                                            <div class="col pl-0 my-3 pr-3 maxout-min-width form-group" >
+                                                <textarea class="form-control variable-textarea" [(ngModel)]="commentData" name="commentTextArea" rows="2"></textarea>
+                                            </div>
+                                            <button class="btn btn-color-green my-2 my-sm-0" (click)="submitCommentClicked(answerObj.postId)" type="submit">Submit</button>
+                                            <div *ngIf="commentData.length <= charLimits.MIN_CHAR_LIMIT_COMMENT || commentData.length > charLimits.MAX_CHAR_LIMIT_COMMENT" class="p-2 text-danger">  {{commentData.length}}/{{charLimits.MAX_CHAR_LIMIT_COMMENT}} characters</div>
+                                            <div *ngIf="commentData.length > charLimits.MIN_CHAR_LIMIT_COMMENT && commentData.length <= charLimits.MAX_CHAR_LIMIT_COMMENT" class="p-2 text-success">  {{commentData.length}}/{{charLimits.MAX_CHAR_LIMIT_COMMENT}} characters</div>
+                                            <div class="alert alert-danger dn-alert-danger" *ngIf="isCmtError">{{errMsg}}</div>
+                                        </div>
+                                    </form>
+                                </ng-container>
                             </div>
                         </div>
                     </div>
@@ -131,20 +166,21 @@
                               </nav>
                               <div class="tab-content border rounded" id="nav-tabContent">
                                 <div class="tab-pane fade show active" id="nav-edit" role="tabpanel" aria-labelledby="nav-edit-tab">
-                                    <textarea class="form-control variable-textarea" [(ngModel)]="markdown" name="answerBody" rows="6"></textarea>
+                                    <textarea class="form-control variable-textarea" [(ngModel)]="answerData" name="answerBody" rows="8"></textarea>
                                 </div>
                                 <div class="tab-pane fade" id="nav-preview" role="tabpanel" aria-labelledby="nav-preview-tab">
                                     <div class="word-warp border rounded px-3 py-2 preview-answer">
-                                        <p *ngIf="!markdown" class="text-muted">
+                                        <p *ngIf="!answerData" class="text-muted">
                                             It seems you haven't written anything.
                                             Type something to see the preview here!!
                                         </p>
-                                        <markdown class="variable-binding" [data]="markdown"></markdown>
+                                        <markdown class="variable-binding" [data]="answerData"></markdown>
                                     </div>
                                 </div>
                               </div>
                         </form>
-                        <button class="btn btn-color-green my-2 my-sm-0" (click)="submitAnswerClicked(markdown, questionObj.postId)" type="submit">Submit</button>
+                        <button class="btn btn-color-green my-2 my-sm-0" (click)="submitAnswerClicked(questionObj.postId)" type="submit">Submit</button>
+                        <div class="alert alert-danger dn-alert-danger" *ngIf="isAnsError">{{errMsg}}</div>
                     </div>
                 </div>
             </div>
