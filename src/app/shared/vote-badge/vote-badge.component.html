@@ -1,0 +1,25 @@
+<ng-container *ngIf="!isComment">
+    <div class="col m-0 p-0" style="height: fit-content;text-align: center; width: min-content; min-width: 55px;">
+        <div class="alert p-0 border"
+        [ngClass]="{'alert-dark': vote=='default', 'alert-success voter-upvoted': vote=='upvote', 'alert-danger voter-downvoted': vote=='downvote'}"> 
+            <div class="px-2 py-0">
+                <a (click)="upvoteClicked()" class="vote-btn"><i class="fas fa-caret-up vote-icon"></i></a>
+                <b class="py-0 my-0">{{totalVoteCount}}</b>
+                <a (click)="downvoteClicked()" class="vote-btn"><i class="fas fa-caret-down vote-icon"></i></a>
+            </div>
+        </div>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="isComment">
+    <div class="col m-0 p-0" style="height: fit-content;text-align: center; width: min-content; min-width: 16px;">
+        <div class="alert px-2 py-0 my-2 border"
+        [ngClass]="{'alert-dark': vote=='default', 'alert-success voter-upvoted': vote=='upvote', 'alert-danger voter-downvoted': vote=='downvote'}"> 
+            <div class="p-0">
+                <a (click)="upvoteClicked()" class="vote-btn pull-left"><i class="fas fa-caret-up vote-icon-comment"></i></a>
+                <b class="py-0 my-0">{{totalVoteCount}}</b>
+                <!-- <a (click)="downvoteClicked()" class="vote-btn pull-right"><i class="fas fa-caret-down vote-icon-comment"></i></a> -->
+            </div>
+        </div>
+    </div>
+</ng-container>
