@@ -16,29 +16,37 @@ export class User {
     password: string;
     firstName: string;
     lastName: string;
+    email?: string;
     jwt?: string;
   }
   
 export class Comment {
-    commentId: string;
-    commentBody: string;
-    byUser: string;
+    id: string;
+    body: string;
+    username: string;
     postedAt: Date;
-    upVotes: number;
-    downVotes: number;
+    vote: Vote;
     usersInteracted: any;
 }
 
+export class Vote {
+    upVotes: number;
+    downVotes: number;
+    voteStatus: number;
+}
+
 export class Post {
-    postId: string;
+    id: string;
     questionHeader: string;
     questionBody: string;
     answerBody: string;
-    byUser: string; 
-    postedAt: Date;
-    upVotes: number;
-    downVotes: number;
-    commentObj: Comment[];
+    username: string; 
+    postedAt: string;
+    questionId: string;
+    noOfAnswers: number;
+    vote: Vote;
+    usersInteracted: Map<string, number>;
+    comments: Comment[];
 }
 
 export class QuestionWithAnswers {

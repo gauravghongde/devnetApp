@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { Post } from '../utilities/constants/app.constants';
 
 // const httpOptions = {
 //   headers: new HttpHeaders({
@@ -19,44 +20,24 @@ import { environment } from 'src/environments/environment';
 export class QuestionService {
 
   // private handleError: HandleError;
-  postQuestionUrl: string = `${environment.apiUrl}/questions/post`;
+  addQuestionUrl: string = `${environment.apiUrl}/posts/add`;
   searchQuestionUrl: string = `${environment.apiUrl}/search`
-  getQuestionUrl: string = `${environment.apiUrl}/questions/`;
+  getQuestionUrl: string = `${environment.apiUrl}/posts/questions/`;
 
   constructor(private http: HttpClient) { }
 
-  postQuestion(questionReq: any): Observable<any> {
-    return this.http.post<any>(this.postQuestionUrl, questionReq).pipe(map(obj => {
-        return obj;
-    }));
+  addQuestion(questionReq: any): Observable<Post> {
+    return this.http.post<Post>(this.addQuestionUrl, questionReq);
   }
 
   searchQuestion(searchQuery: string) {
     return this.http.get(this.searchQuestionUrl, {
-      params: {
-        query: searchQuery
-      },
+      params: { query: searchQuery },
       observe: 'response'
     })
   }
 
-  errorHandler(error: HttpErrorResponse) {
-    return throwError(error.message || "server error.");
-  }
-
   getQueWithAns(questionId: string, questionHeader: string) {
-    return this.http.get(this.getQuestionUrl + questionId + "/" + questionHeader);
+    return this.http.get(this.getQuestionUrl + questionId);
   }
-
-  // addHero (hero: Hero): Observable<Hero> {
-  //   return this.http.post<Hero>(this.heroesUrl, hero, httpOptions)
-  //     .pipe(
-  //       catchError(this.handleError('addHero', hero))
-  //     );
-  // }
-
-  // searchQuestion(questionTitle: string, questionBody: string): Observable<any>{
-  //   return this.http.post<any>({this.questionTitle, this.questionBody},)
-  // }
-
 }

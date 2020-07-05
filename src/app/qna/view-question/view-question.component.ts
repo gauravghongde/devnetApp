@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { QNA_MOCK } from '../qna-mock';
 import { QuestionService } from '../question.service';
 import { AnswerService } from '../answer.service';
 import { CommentService } from '../comment.service';
-import { CharLimits } from 'src/app/utilities/constants/app.constants';
+import { CharLimits, Post, Comment } from 'src/app/utilities/constants/app.constants';
 
 @Component({
   selector: 'app-view-question',
@@ -14,8 +13,8 @@ import { CharLimits } from 'src/app/utilities/constants/app.constants';
 export class ViewQuestionComponent implements OnInit {
 
   // public queAndAnsObj: QuestionWithAnswers;
-  public questionObj: any;
-  public answerObjList: any[];
+  public questionObj: Post = new Post();
+  public answerObjList: Post[] = new Array<Post>();
   
   public currentVoteCount: number = 0;
   public currentUpvotes: number = 0;
@@ -23,6 +22,8 @@ export class ViewQuestionComponent implements OnInit {
 
   public isAnswerWindowOpen:boolean = true;
   public isCommentSubmitted: boolean = false;
+
+  newComment: Comment = new Comment();
 
   questionTitle: string = "";
   questionBody: string = "";
@@ -57,32 +58,30 @@ export class ViewQuestionComponent implements OnInit {
   }
 
   showQuestion(questionId: string, questionHeader: string) {
-    this.questionService.getQueWithAns(questionId, questionHeader).subscribe((queWithAnsRes: any) => {
-      // queWithAnsRes = QNA_MOCK;
-      console.log(queWithAnsRes);
-      this.questionObj = queWithAnsRes.question;
-      this.answerObjList = queWithAnsRes.listOfAnswers;
+    this.questionService.getQueWithAns(questionId, questionHeader).subscribe((getQueWithAnsResp: any) => {
+      console.log(getQueWithAnsResp);
+      getQueWithAnsResp.forEach((postObj: any) => {
+        (postObj.id == postObj.questionId) ? this.questionObj = postObj : this.answerObjList.push(postObj);
+      });
       // this.currentUpvotes = +this.questionObj.upVotes; //parseInt(this.questionObj.upVotes)
       // this.currentDownvotes = +this.questionObj
       if(this.answerObjList.length == 0) {
         this.isAnswerWindowOpen = false;
       }
     });
-
-    
-    // let queWithAnsRes = QNA_MOCK;
-    // console.log(queWithAnsRes);
-    // this.questionObj = queWithAnsRes.question;
-    // this.answerObjList = queWithAnsRes.listOfAnswers;
   }
 
-  submitAnswerClicked(questionId: String) {
+  submitAnswerClicked(questionId: string) {
     if (this.answerData.length >= this.charLimits.MIN_CHAR_LIMIT_ANSWER 
       && this.answerData.length <= this.charLimits.MAX_CHAR_LIMIT_ANSWER ) {
       this.isAnsError = false;
-      let contentBody: string = this.answerData;
-      this.answerService.postAnswer({contentBody},questionId).subscribe(answerRes => console.log("posted ans response -> ", answerRes));
-      window.location.reload();
+      let answerBody: string = this.answerData;
+      this.answerService.addAnswer({answerBody}, questionId).subscribe((answerRes:Post) => {
+        console.log("added ans response -> ", answerRes);
+        if (answerRes) {
+          window.location.reload();
+        }
+      });
     }
     else if (this.answerData.length > this.charLimits.MAX_CHAR_LIMIT_ANSWER) {
       this.isAnsError = true;
@@ -94,18 +93,19 @@ export class ViewQuestionComponent implements OnInit {
     }
   }
 
-  submitCommentClicked(postId: String) {
+  submitCommentClicked(postId: string) {
     if (this.commentData.length >= this.charLimits.MIN_CHAR_LIMIT_COMMENT 
       && this.commentData.length <= this.charLimits.MAX_CHAR_LIMIT_COMMENT) {
       this.isCmtError = false;
-      let commentBody: string = this.commentData;
-      this.commentService.addComment({commentBody},postId).subscribe(commentRes => {
+      let body: string = this.commentData;
+      this.commentService.addComment({body}, postId).subscribe((commentRes: any) => {
         console.log("posted comment response -> ", commentRes);
         if(commentRes) {
           this.isCommentSubmitted = true;
+          this.newComment = commentRes;
+          this.commentData = "";
         }
       });
-      
     }
     else if (this.commentData.length > this.charLimits.MAX_CHAR_LIMIT_COMMENT) {
       this.isCmtError = true;
@@ -115,5 +115,6 @@ export class ViewQuestionComponent implements OnInit {
       this.isCmtError = true;
       this.errMsg = "Comment is too short!!!"
     }
+    this.isCommentSubmitted = false;
   }
 }

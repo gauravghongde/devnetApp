@@ -11,7 +11,7 @@ import { environment } from './../../environments/environment';
 })
 export class AuthService {
 
-  private loginUrl = `${environment.apiUrl}/auth/login`;
+  private loginUrl = `${environment.authUrl}/auth/login`;
   private currentUserSubject: BehaviorSubject<User>;
 
   constructor(private http: HttpClient, private router: Router) {
