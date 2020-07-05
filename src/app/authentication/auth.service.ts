@@ -12,6 +12,7 @@ import { environment } from './../../environments/environment';
 export class AuthService {
 
   private loginUrl = `${environment.authUrl}/auth/login`;
+  private registerUrl = `${environment.authUrl}/auth/register`;
   private currentUserSubject: BehaviorSubject<User>;
 
   constructor(private http: HttpClient, private router: Router) {
@@ -23,7 +24,7 @@ export class AuthService {
   }
 
   isLoggedIn(): boolean {
-    console.log("ISLOGGEDIN", !!sessionStorage.getItem('currentUser'))
+    console.log('ISLOGGEDIN', !!sessionStorage.getItem('currentUser'));
     return !!sessionStorage.getItem('currentUser');
   }
 
@@ -35,6 +36,11 @@ export class AuthService {
         this.currentUserSubject.next(user);
         return user;
       }));
+  }
+
+  register(email: string, firstName: string, lastName: string, password: string, username: string): Observable<any> {
+    const registerBody = { email, firstName, lastName, password, username }
+    return this.http.post<any>(this.registerUrl, registerBody);
   }
 
   logout() {

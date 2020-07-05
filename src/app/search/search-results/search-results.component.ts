@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { QuestionService } from 'src/app/qna/question.service';
 import { ActivatedRoute, Params } from '@angular/router';
-import { isNullOrUndefined } from 'util';
+import { QuestionService } from 'src/app/qna/question.service';
+import { Post } from 'src/app/utilities/constants/app.constants';
+import { HttpErrorResponse } from '@angular/common/http';
 
 
 @Component({
@@ -10,9 +11,11 @@ import { isNullOrUndefined } from 'util';
   styleUrls: ['./search-results.component.scss']
 })
 export class SearchResultsComponent implements OnInit {
-  searchResultObj: any;
-  questionToNoOfAnswersMap = new Map<string, string>();
-  questionToUpVotesMap = new Map<string, string>();
+  searchResultObj: Post[];
+  searchLoader: boolean;
+  isError: boolean;
+  errorCode: number;
+  errorMsg: string;
 
   constructor(
     private questionService: QuestionService,
@@ -20,6 +23,8 @@ export class SearchResultsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.searchLoader = false;
+    this.isError = false;
     this.route.queryParams.subscribe(
       (params: Params) => {
         if (params.hasOwnProperty('query')) {
@@ -32,17 +37,19 @@ export class SearchResultsComponent implements OnInit {
   doSearch(searchQuery: string) {
     if (searchQuery) {
       // encodeURIComponent(this.searchQuery.trim())
-      this.questionService.searchQuestion(searchQuery).subscribe(questionObjArr => {
-        console.log(questionObjArr.body);
+      this.searchLoader = true;
+      this.questionService.searchQuestion(searchQuery).subscribe((questionObjArr: any) => {
+        this.isError = false;
         this.searchResultObj = questionObjArr.body;
-        this.searchResultObj.forEach(questionObj => {
-          questionObj.questionBody = questionObj.questionBody.replace(/[^a-zA-Z ?.:,]/g, "");
-          this.questionToNoOfAnswersMap.set(questionObj.id, !isNullOrUndefined(questionObj.noOfAnswers) ? (questionObj.noOfAnswers).toString() : "0");          
-          this.questionToUpVotesMap.set(questionObj.id, (parseInt(questionObj.vote.upVotes) - parseInt(questionObj.vote.downVotes)).toString());
-        });
+        console.log('this.searchResultObj: ', this.searchResultObj);
+      },
+      (err) => {
+        this.isError = true;
+        this.errorMsg = err;
       });
+      this.searchLoader = false;
     }
   }
 
-  // TODO: onclick question, router.navigate /qId 
+  // TODO: onclick question, router.navigate /qId
 }

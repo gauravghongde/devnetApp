@@ -1,6 +1,6 @@
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -16,6 +16,9 @@ import { SharedModule } from './shared/shared.module';
 import { AuthGuard } from './_guards/auth.guard';
 import { ErrorInterceptor } from './_interceptors/error.interceptor';
 import { JwtInterceptor } from './_interceptors/jwt.interceptor';
+import { AboutComponent } from './about/about.component';
+import { ContactComponent } from './contact/contact.component';
+import { ContributeComponent } from './contribute/contribute.component';
 
 
 @NgModule({
@@ -23,18 +26,22 @@ import { JwtInterceptor } from './_interceptors/jwt.interceptor';
     AppComponent,
     RegisterComponent,
     LoginComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    AboutComponent,
+    ContactComponent,
+    ContributeComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule,
     SharedModule,
     HomeModule,
     QnaModule,
     ProfileModule,
-    SearchModule
+    SearchModule,
   ],
   providers: [
     AuthService,

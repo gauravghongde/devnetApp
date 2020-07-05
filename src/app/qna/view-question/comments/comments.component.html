@@ -1,0 +1,129 @@
+<ng-container *ngFor="let comment of post.comments">
+    <ng-container *ngIf="comment">
+        <div class="row py-0 mx-0 comment-body">
+            <app-vote-badge [currentUpvotes]="+comment.vote.upVotes" [currentDownvotes]="+comment.vote.downVotes"
+                [currentVoteStatus]="+comment.vote.voteStatus" [postId]="post.id" [commentId]="comment.id"
+                [usersInteracted]="comment.usersInteracted">
+            </app-vote-badge>
+            <ng-container>
+                <div id="{{'commentBodyDOM'+comment.id}}" class="col pl-4 pr-0" style="min-width: 85%;">
+                    <p class="my-2">
+                        <span id="{{'commentTextDOM'+comment.id}}">{{comment.body}}</span>
+                        <a class="ml-2" href="/users/{{comment.username}}">
+                            <span *ngIf="comment.username == post.username"
+                                class="badge badge-secondary px-2 mr-2 comment-author-badge">{{comment.username}}
+                            </span>
+                            <span *ngIf="comment.username != post.username" 
+                                class="badge badge-secondary border px-2 mr-2 comment-user-badge">{{comment.username}}
+                            </span>
+                        </a>
+                        <ng-container *ngIf="hasEditAccess(comment.username)">
+                            <a *ngIf="editClicked" (click)="editClicked = false">cancel</a>
+                            <!-- <a data-toggle="collapse" href="{{'#commentEditAreaCollapse'+comment.id}}">edit</a> -->
+                            <a (click)="editCommentClicked(comment.id, comment.body)" class="link mr-2">edit</a>
+                            <a (click)="deleteCommentClicked(post.id, comment.id)" class="link mr-2">delete</a>
+                        </ng-container>
+                    </p>
+                </div>
+            </ng-container>
+            <ng-container >
+                <div id="{{'commentEditText'+comment.id}}" class="col pl-4 pr-0" style="min-width: 85%;">
+                    <form class="my-3 maxout-min-width">
+                        <div id="{{'commentEditAreaCollapse'+comment.id}}" class="row py-0 mx-0 comment-body collapse multi-collapse"
+                            [class.d-none]="isCommentSubmitted">
+                            <div class="col pl-0 mb-3 pr-3 maxout-min-width form-group">
+                                <textarea class="form-control variable-textarea" [(ngModel)]="commentEditData" name="commentTextArea"
+                                    rows="3">
+                                </textarea>
+                            </div>
+                            <button class="btn btn-color-green my-2 my-sm-0" (click)="submitEditCommentClicked(post.id, comment.id);"
+                                type="submit">Submit</button>
+                            <div *ngIf="commentEditData.length <= charLimits.MIN_CHAR_LIMIT_COMMENT || commentEditData.length > charLimits.MAX_CHAR_LIMIT_COMMENT"
+                                class="p-2 text-danger"> {{commentEditData.length}}/{{charLimits.MAX_CHAR_LIMIT_COMMENT}} characters</div>
+                            <div *ngIf="commentEditData.length > charLimits.MIN_CHAR_LIMIT_COMMENT && commentEditData.length <= charLimits.MAX_CHAR_LIMIT_COMMENT"
+                                class="p-2 text-success"> {{commentEditData.length}}/{{charLimits.MAX_CHAR_LIMIT_COMMENT}} characters</div>
+                            <div class="alert alert-danger dn-alert-danger" *ngIf="isCmtError">{{errMsg}}</div>
+                            <a (click)="editCancelClicked(comment.id)" class="p-2 link">cancel</a>
+                            <a (click)="deleteCommentClicked(post.id, comment.id)" class="link p-2 mr-2">delete</a>
+                        </div>
+                    </form>
+                </div>
+            </ng-container>
+        </div>
+        <hr class="comment-seperator" />
+    </ng-container>
+</ng-container>
+
+<!-- <ng-container *ngIf="isCommentSubmitted">
+    <div class="row py-0 mx-0 comment-body">
+        <app-vote-badge [currentUpvotes]="+0" [currentDownvotes]="+0" [currentVoteStatus]="+newComment.vote.voteStatus"
+            [postId]="post.id" [commentId]="newComment.id" [usersInteracted]="newComment.usersInteracted">
+        </app-vote-badge>
+        <ng-container>
+            <div id="{{'commentBodyDOM'+newComment.id}}" class="col pl-4 pr-0" style="min-width: 85%;">
+                <p class="my-2">
+                    <span id="{{'commentTextDOM'+newComment.id}}">{{newComment.body}}</span>
+                     – 
+                    <a href="/users/{{newComment.username}}">
+                        <span *ngIf="newComment.username == post.username"
+                            class="badge badge-secondary px-2 mr-2 comment-author-badge">{{newComment.username}}
+                        </span>
+                        <span *ngIf="newComment.username != post.username" 
+                            class="badge badge-secondary border px-2 mr-2 comment-user-badge">{{newComment.username}}
+                        </span>
+                    </a>
+                    <a *ngIf="editClicked" (click)="editClicked = false">cancel</a>
+                    <a (click)="editCommentClicked(newComment.id, newComment.body)" class="link mr-2">
+                        edit
+                    </a>
+                    <a href="#">delete</a>
+                </p>
+            </div>
+        </ng-container>
+        <ng-container >
+            <div id="{{'commentEditText'+newComment.id}}" class="col pl-4 pr-0" style="min-width: 85%;">
+                <form class="my-3 maxout-min-width">
+                    <div id="{{'commentEditAreaCollapse'+newComment.id}}" class="row py-0 mx-0 comment-body collapse multi-collapse"
+                        [class.d-none]="isCommentSubmitted">
+                        <div  class="col pl-0 mb-3 pr-3 maxout-min-width form-group">
+                            <textarea class="form-control variable-textarea" [(ngModel)]="commentEditData" name="commentTextArea"
+                                rows="3">
+                            </textarea>
+                        </div>
+                        <button class="btn btn-color-green my-2 my-sm-0" (click)="submitEditCommentClicked(post.id, newComment.id);"
+                            type="submit">Submit</button>
+                        <div *ngIf="commentEditData.length <= charLimits.MIN_CHAR_LIMIT_COMMENT || commentEditData.length > charLimits.MAX_CHAR_LIMIT_COMMENT"
+                            class="p-2 text-danger"> {{commentEditData.length}}/{{charLimits.MAX_CHAR_LIMIT_COMMENT}} characters</div>
+                        <div *ngIf="commentEditData.length > charLimits.MIN_CHAR_LIMIT_COMMENT && commentEditData.length <= charLimits.MAX_CHAR_LIMIT_COMMENT"
+                            class="p-2 text-success"> {{commentEditData.length}}/{{charLimits.MAX_CHAR_LIMIT_COMMENT}} characters</div>
+                        <div class="alert alert-danger dn-alert-danger" *ngIf="isCmtError">{{errMsg}}</div>
+                        <a class="p-2 link" (click)="editCancelClicked(newComment.id)">cancel</a>
+                        <a class="p-2" href="#">delete</a>
+                    </div>
+                </form>
+            </div>
+        </ng-container>
+    </div>
+    <hr class="comment-seperator" />
+</ng-container> -->
+
+<ng-container >
+    <form class="my-3 maxout-min-width">
+        <a id="{{'addCommentButton'+index}}" data-toggle="collapse" href="{{'#commentTextAreaCollapse'+index}}"><b>Add a comment</b></a>
+        <div id="{{'commentTextAreaCollapse'+index}}" class="row py-0 mx-0 comment-body collapse multi-collapse"
+            [class.d-none]="isCommentSubmitted">
+            <div  class="col pl-0 my-3 pr-3 maxout-min-width form-group">
+                <textarea class="form-control variable-textarea" [(ngModel)]="commentData" name="commentTextArea"
+                    rows="2" placeholder="Type your comment here..">
+                </textarea>
+            </div>
+            <button class="btn btn-color-green my-2 my-sm-0" (click)="submitCommentClicked(post.id);"
+                type="submit">Submit</button>
+            <div *ngIf="commentData.length <= charLimits.MIN_CHAR_LIMIT_COMMENT || commentData.length > charLimits.MAX_CHAR_LIMIT_COMMENT"
+                class="p-2 text-danger"> {{commentData.length}}/{{charLimits.MAX_CHAR_LIMIT_COMMENT}} characters</div>
+            <div *ngIf="commentData.length > charLimits.MIN_CHAR_LIMIT_COMMENT && commentData.length <= charLimits.MAX_CHAR_LIMIT_COMMENT"
+                class="p-2 text-success"> {{commentData.length}}/{{charLimits.MAX_CHAR_LIMIT_COMMENT}} characters</div>
+            <div class="alert alert-danger dn-alert-danger" *ngIf="isCmtError">{{errMsg}}</div>
+        </div>
+    </form>
+</ng-container>
