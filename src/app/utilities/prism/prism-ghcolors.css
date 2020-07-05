@@ -121,3 +121,8 @@ pre[class*="language-"] {
 .token.italic {
 	font-style: italic;
 }
+
+a img {
+    max-width: 100%;
+    max-height: 100%;
+}

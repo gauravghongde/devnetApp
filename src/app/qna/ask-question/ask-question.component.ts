@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { QuestionService } from '../question.service';
+import { Post } from 'src/app/utilities/constants/app.constants';
 
 @Component({
   selector: 'app-ask-question',
@@ -17,14 +18,14 @@ export class AskQuestionComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  submitQuestion(contentHeader: string, contentBody: string) {
-    if (contentBody.length >= 100 
-      && contentBody.length <= 5000 
-      && contentHeader.length <= 130 
+  submitQuestion(questionHeader: string, questionBody: string) {
+    if (questionBody.length >= 100 
+      && questionBody.length <= 5000 
+      && questionHeader.length <= 130 
       //&& !questionBody.trim() 
       //&& !questionTitle.trim()
       ) {
-        this.questionService.postQuestion({contentHeader, contentBody}).subscribe(questionObj => console.log(questionObj));
+        this.questionService.addQuestion({questionHeader, questionBody}).subscribe((questionRes: Post) => console.log(questionRes));
     }
   }
 

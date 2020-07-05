@@ -6,14 +6,14 @@
             <div class="row">
                 <div class="col">
                     <div class="badge badge-vote-count p-2 mr-1 mb-2">
-                        {{questionToUpVotesMap.get(questionObj.postId)}} Votes
+                        {{questionToUpVotesMap.get(questionObj.id)}} Votes
                     </div>
                     <div class="badge badge-answers-count p-2 ml-1 mb-2">
-                        {{questionToNoOfAnswersMap.get(questionObj.postId)}} Answers
+                        {{questionToNoOfAnswersMap.get(questionObj.id)}} Answers
                     </div>
 
                     <div class="question-header">
-                        <a routerLink="/questions/{{ questionObj.postId }}/{{ questionObj.questionHeader }}">
+                        <a routerLink="/questions/{{ questionObj.id }}/{{ questionObj.questionHeader }}">
                             {{questionObj.questionHeader}}
                         </a>
                     </div>
@@ -24,7 +24,7 @@
                         <div style="text-align: right;">
                             - Posted at {{questionObj.postedAt | date}} by
                             <a routerLink="/users/{{ questionObj.postedBy }}">
-                                {{questionObj.postedBy}}
+                                {{questionObj.username}}
                             </a>
                         </div>
                     </div>

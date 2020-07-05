@@ -1,22 +1,22 @@
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment';
-import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
+import { isNullOrUndefined } from 'util';
+import { Post } from '../utilities/constants/app.constants';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AnswerService {
 
-  postAnswerUrl: string;
+  addAnswerUrl: string;
 
   constructor(private http: HttpClient) { }
 
-  postAnswer(answerReq: { contentBody: String; }, questionId: String): Observable<any>{
-    this.postAnswerUrl = `${environment.apiUrl}/questions/${questionId}/answers/post`;
-    return this.http.post<any>(this.postAnswerUrl, answerReq).pipe(map(obj => {
-      return obj;
-    }));
+  addAnswer(answerReq: { answerBody: string }, questionId: string): Observable<Post> {
+    this.addAnswerUrl = `${environment.apiUrl}/posts/add`;
+    const options = { params: new HttpParams().append("questionId", questionId) };
+    return this.http.post<Post>(this.addAnswerUrl, answerReq, options);
   }
 }

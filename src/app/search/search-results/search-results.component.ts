@@ -11,8 +11,8 @@ import { isNullOrUndefined } from 'util';
 })
 export class SearchResultsComponent implements OnInit {
   searchResultObj: any;
-  questionToNoOfAnswersMap = new Map<String, String>();
-  questionToUpVotesMap = new Map<String, String>();
+  questionToNoOfAnswersMap = new Map<string, string>();
+  questionToUpVotesMap = new Map<string, string>();
 
   constructor(
     private questionService: QuestionService,
@@ -37,8 +37,8 @@ export class SearchResultsComponent implements OnInit {
         this.searchResultObj = questionObjArr.body;
         this.searchResultObj.forEach(questionObj => {
           questionObj.questionBody = questionObj.questionBody.replace(/[^a-zA-Z ?.:,]/g, "");
-          this.questionToNoOfAnswersMap.set(questionObj.postId, !isNullOrUndefined(questionObj.listOfAnswers) ? (questionObj.listOfAnswers.length()).toString() : "0");          
-          this.questionToUpVotesMap.set(questionObj.postId, (parseInt(questionObj.upVotes) - parseInt(questionObj.downVotes)).toString());
+          this.questionToNoOfAnswersMap.set(questionObj.id, !isNullOrUndefined(questionObj.noOfAnswers) ? (questionObj.noOfAnswers).toString() : "0");          
+          this.questionToUpVotesMap.set(questionObj.id, (parseInt(questionObj.vote.upVotes) - parseInt(questionObj.vote.downVotes)).toString());
         });
       });
     }

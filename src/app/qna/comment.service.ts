@@ -1,8 +1,7 @@
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -13,10 +12,9 @@ export class CommentService {
 
   constructor(private http: HttpClient) { }
 
-  addComment(commentReq: { commentBody: String; }, postId: String): Observable<any>{
-    this.addCommentUrl = `${environment.apiUrl}/posts/${postId}/add`;
-    return this.http.post<any>(this.addCommentUrl, commentReq).pipe(map(obj => {
-      return obj;
-    }));
+  addComment(commentReq: { body: string }, postId: string): Observable<Comment> {
+    this.addCommentUrl = `${environment.apiUrl}/comments/add`;
+    const options = { params: new HttpParams().append("postId", postId) };
+    return this.http.post<Comment>(this.addCommentUrl, commentReq, options);
   }
 }
