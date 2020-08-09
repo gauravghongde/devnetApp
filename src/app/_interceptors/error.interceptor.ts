@@ -13,7 +13,7 @@ export class ErrorInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       retry(1),
       catchError((error: HttpErrorResponse) => {
-        console.log("HTTP_ERROR: ", error);
+        console.log('HTTP_ERROR: ', error);
         if (error.status === 401) {
           this.authService.logout();
           location.reload();
@@ -26,7 +26,9 @@ export class ErrorInterceptor implements HttpInterceptor {
           // server-side error
           errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
         }
-        window.alert(errorMessage);
+        if (error.status !== 404) {
+          window.alert(errorMessage);
+        }
         return throwError(errorMessage || error.statusText);
       }));
   }

@@ -1,0 +1,51 @@
+.comment-body {
+    font-size: 13px;
+    width: 100%;
+}
+
+.comment-seperator {
+    border: 0;
+    clear:both;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    display:block;
+    width: 100%;               
+    background-color:#d6d8d9;
+    height: 1px;
+}
+
+.comment-author-badge {
+    background-color: #101357;
+    color: lightblue;
+    font-size: 13px;
+    font-weight: 400;
+}
+
+.comment-author-badge:hover {
+    text-decoration: underline;
+}
+
+.comment-user-badge {
+    background-color: transparent;
+    border: 1px #101357 solid !important;
+    color: #101357;
+    font-size: 13px;
+    font-weight: 400;
+}
+
+.comment-user-badge:hover {
+    text-decoration: underline;
+}
+
+.maxout-min-width {
+    min-width: 100%;
+}
+
+.link { 
+    color: #007bff; 
+} 
+
+.link:hover { 
+    cursor: pointer;
+    text-decoration: underline; 
+}

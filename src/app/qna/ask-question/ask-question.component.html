@@ -4,35 +4,92 @@
 
 <div class="mt-4 mx-4 px-2">
     <div class="row">
-        <div class="col">
-            <form>
-                <div class="card">
-                    <div class="card-header form-group">
-                        <label for="questionTitle">Title</label>
-                        <input type="text" [(ngModel)]="questionTitle" class="form-control" name="questionTitle" aria-describedby="qustionTitle"
-                            placeholder="Enter Title">
+        <div class="col-md-9">
+            <form class="form-group answer-body">
+                <label for="answerBody"><h5>Write your question here</h5></label>
+                <nav class="pull-right pr-1">
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <a class="nav-item nav-link active" id="nav-edit-tab" data-toggle="tab" href="#nav-edit" role="tab" aria-controls="nav-home" aria-selected="true">Edit</a>
+                        <a class="nav-item nav-link" id="nav-preview-tab" data-toggle="tab" href="#nav-preview" role="tab" aria-controls="nav-contact" aria-selected="false">Preview</a>
                     </div>
-                    <div class="card-body form-group">
-                        <label for="questionBody">Enter some description (you can include code)</label>
-                        <textarea class="form-control variable-textarea" [(ngModel)]="markdown" name="questionBody" rows="4"></textarea>
+                </nav>
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-edit" role="tabpanel" aria-labelledby="nav-edit-tab">
+                        <div class="card">
+                            <div class="card-header form-group">
+                                <label for="questionTitle">Title*</label>
+                                <input type="text" [(ngModel)]="questionTitle" class="form-control" name="questionTitle" aria-describedby="qustionTitle"
+                                    placeholder="Enter Title">
+                            </div>
+                            <div class="card-body form-group">
+                                <label for="questionBody">Enter some description (you can include code)</label>
+                                <textarea class="form-control variable-textarea" [(ngModel)]="markdown" name="questionBody" rows="4"></textarea>
+                            </div>
+                        </div>
                     </div>
+                    <div class="tab-pane fade" id="nav-preview" role="tabpanel" aria-labelledby="nav-preview-tab">
+                        <div class="card">
+                            <div class="card-header">
+                                <b>Preview</b>
+                            </div>
+                            <div class="card-body word-warp">
+                                <p *ngIf="!questionTitle.length" class="text-muted">As you type, you can see the preview here!</p>
+                                <h3 *ngIf="questionTitle.length">{{questionTitle}}<hr/></h3>
+                                <markdown *ngIf="questionTitle.length" 
+                                class="variable-binding" 
+                                [data]="markdown"></markdown>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mr-2 pull-left">
+                        <button class="btn btn-color-green my-2 my-sm-0" 
+                            (click)="submitQuestion(questionTitle, markdown)" 
+                            type="submit" [disabled]="!questionTitle || loader">
+                            Submit
+                        </button>
+                    </div>
+                    <div class="alert alert-danger dn-alert-danger" *ngIf="isQueError">{{errMsg}}</div>
+                    <div *ngIf="loader" class="spinner-loader"></div> 
                 </div>
             </form>
         </div>
-        <div class="col">
+        <div class="col-md-3">
             <div class="card">
                 <div class="card-header">
-                    <b>Preview</b>
+                    How to Format
                 </div>
-                <div class="card-body word-warp">
-                    <p *ngIf="!questionTitle.length" class="text-muted">As you type preview here!</p>
-                    <h3 *ngIf="questionTitle.length">{{questionTitle}}<hr/></h3>
-                    <markdown *ngIf="questionTitle.length" 
-                    class="variable-binding" 
-                    [data]="markdown"></markdown>
-                </div>
-                <div class="card-footer">
-                    <button class="btn btn-hollow-color-yellow my-2 my-sm-0" (click)="submitQuestion(questionTitle, markdown)" type="submit">Submit</button>
+                <div class="card-body">
+                        ► create code fences with backticks ` or tildes ~
+                        
+                        ```
+                        like so
+                        ```
+                    <hr>
+                        ► add language identifier to highlight code
+    
+                        ```python
+                        def function(foo):
+                            print(foo)
+                        ```
+                    <hr>
+                        ► put returns between paragraphs
+                    <hr>
+                        ► for linebreak add 2 spaces at end
+                    <hr>
+                        ► _italic_ or **bold**
+                    <hr>
+                        ► indent code by 4 spaces
+                    <hr>
+                        ► backtick escapes `like _so_`
+                    <hr>
+                        ► quote by placing > at start of line
+                    <hr>
+                        ► to make links (use https whenever possible)
+                        <https://example.com>
+                        [example](https://example.com)
+                        <a href="https://example.com">example</a>
+    
+                        formatting
                 </div>
             </div>
         </div>

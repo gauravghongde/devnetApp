@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-dark nav-bg-color">
-    <a class="navbar-brand" href="#">
+    <a class="navbar-brand" routerLink="/home">
         <h4>devnet</h4>
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent"
@@ -10,13 +10,16 @@
     <div class="collapse navbar-collapse" id="navbarContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" routerLink="/about" routerLinkActive="active">About Us</a>
+                <a class="nav-link" routerLink="/questions/ask" routerLinkActive="active">Ask a Question</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" routerLink="/questions" routerLinkActive="active">Browse Questions</a>
+                <a class="nav-link" routerLink="/contribute" routerLinkActive="active">Contribute</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" routerLink="/contact" routerLinkActive="active">Contact Us</a>
+                <a class="nav-link" routerLink="/contact" routerLinkActive="active">Contact</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/about" routerLinkActive="active">About</a>
             </li>
         </ul>
         <ul class="navbar-nav">
@@ -34,8 +37,8 @@
             </li>
             <li *ngIf="(currentUser$ | async)" class="nav-item">
                 <div class="pl-2">
-                    <button type="button" class="btn btn-circle mr-sm-2 text-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-2x fa-user-circle"></i>
+                    <button type="button" class="btn btn-circle mr-sm-2 p-0 m-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img class="navbar-avatar" appGravatar [avatarKey]="currentUserSubj.value.email">
                     </button>
                     <div class="dropdown-menu dropdown-menu-right mr-4">
                         <a class="dropdown-item" type="button"><b>{{currentUserSubj.value.firstName}} {{currentUserSubj.value.lastName}}</b></a>

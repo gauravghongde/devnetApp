@@ -1,0 +1,36 @@
+<div class="col">
+    <ng-container *ngFor="let questionObj of questionList">
+        <div class="row">
+            <div class="col">
+                <div class="badge badge-vote-count p-2 mr-1 mb-2">
+                    {{questionToUpVotesMap.get(questionObj.id)}} Votes
+                </div>
+                <div class="badge badge-answers-count p-2 ml-1 mb-2">
+                    {{questionToNoOfAnswersMap.get(questionObj.id)}} Answers
+                </div>
+
+                <div class="question-header">
+                    <a routerLink="/questions/{{ questionObj.id }}/{{ questionObj.questionHeader }}">
+                        {{questionObj.questionHeader}}
+                    </a>
+                </div>
+                <div class="question-body">
+                    <p>
+                        {{ (questionObj.questionBody.length>250)? (questionObj.questionBody | slice:0:250)+'…':(questionObj.questionBody) }}
+                    </p>
+                    <div style="text-align: right;">
+                        - Posted at {{questionObj.postedAt | date}} by
+                        <a routerLink="/users/{{ questionObj.username }}">
+                            {{questionObj.username}}
+                        </a>
+                    </div>
+                </div>
+                <hr/>
+            </div>
+            <div class="col-md-2">
+                <div class="badge">
+                </div>
+            </div>
+        </div>
+    </ng-container>
+</div>

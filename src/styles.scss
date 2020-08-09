@@ -2,9 +2,10 @@
 @import "./app/fontawesome/scss/fontawesome.scss";
 @import "./app/fontawesome/scss/solid.scss";
 @import "./app/utilities/shared_variables.scss";
+@import 'https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap';
 
 p,h5,h6,body,footer,a {
-    font-family: Roboto Condensed, sans-serif;
+    font-family: 'Roboto Condensed', sans-serif;
     font-style: normal;
     font-weight: 400;
 }
@@ -98,7 +99,7 @@ body {
 }
 
 .btn {
-    font-family: Roboto Condensed, sans-serif;
+    font-family: 'Roboto Condensed', sans-serif;
     font-weight: 600;
 }
 
@@ -132,7 +133,9 @@ body {
   color: black;
 }
   
-
+.maxout-min-width {
+    min-width: 100%;
+}
 
 h1,h2,h3,h4 {
     font-family: proxima-nova, sans-serif;
@@ -141,15 +144,39 @@ h1,h2,h3,h4 {
 }
 
 .dn-alert-danger{
-    padding: 8px;
+    padding: 6px;
     margin: 0px;
     border: 1px solid #f5c6cb;
     background-color: #f8d7da;
     border-left-width: 3px;
     border-left-color: #ca4d59;
+    overflow: hidden;
 }
 
 textarea {
     font-size: medium !important;
     font-family: monospace;
 }
+
+//Spinner Loader
+.spinner-loader {
+    border: 2px solid white;
+    border-radius: 50%;
+    border-top: 2px solid #3498db;
+    width: 25px;
+    height: 25px;
+    -webkit-animation: spinner-loader-spin 2s linear infinite; /* Safari */
+    animation: spinner-loader-spin 2s linear infinite;
+    overflow: hidden;
+  }
+  
+  /* Safari */
+  @-webkit-keyframes spinner-loader-spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+  }
+  
+  @keyframes spinner-loader-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }

@@ -11,37 +11,8 @@ voter-downvoted {
     // @extend .alert-danger;
 }
 
-.comment-body {
-    font-size: 13px;
-    width: 100%;
-}
-
-.comment-seperator {
-    border: 0;
-    clear:both;
-    margin-top: 2px;
-    margin-bottom: 2px;
-    display:block;
-    width: 100%;               
-    background-color:#d6d8d9;
-    height: 1px;
-}
-
-.comment-author-badge {
-    background-color: #101357;
-    color: lightblue;
-    font-size: 13px;
-    font-weight: 400;
-}
-
-.comment-author-badge:hover {
-    color: fade-out($color: white, $amount: 0.1);
-    font-size: 13px;
-    font-weight: 400;
-}
-
 .author-card {
-    width: 25%;
+    width: 170px;
     background: #101357;
     float: right;
     padding: 8px;
@@ -94,6 +65,6 @@ a:hover {
     min-height: 165px;
 }
 
-.maxout-min-width {
-    min-width: 100%;
+.comment-display-contents {
+    display: contents;
 }

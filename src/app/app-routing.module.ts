@@ -8,13 +8,16 @@ import { HomepageComponent } from './home/homepage/homepage.component';
 import { AskQuestionComponent } from './qna/ask-question/ask-question.component';
 import { SearchResultsComponent } from './search/search-results/search-results.component';
 import { ViewQuestionComponent } from './qna/view-question/view-question.component';
+import { AboutComponent } from './about/about.component';
+import { ContactComponent } from './contact/contact.component';
+import { ContributeComponent } from './contribute/contribute.component';
 
 const routes: Routes = [
-  { 
-    path: '', 
+  {
+    path: '',
     component: HomepageComponent,
     pathMatch: 'full',
-    canActivate: [AuthGuard] 
+    canActivate: [AuthGuard]
   },
   {
     path: 'login',
@@ -25,8 +28,21 @@ const routes: Routes = [
     component: RegisterComponent
   },
   {
+    path: 'contribute',
+    component: ContributeComponent
+  },
+  {
+    path: 'contact',
+    component: ContactComponent
+  },
+  {
+    path: 'about',
+    component: AboutComponent
+  },
+  {
     path: 'home',
-    redirectTo: ''
+    redirectTo: '',
+    canActivate: [AuthGuard]
   },
   {
     path: 'questions',
@@ -36,22 +52,25 @@ const routes: Routes = [
         component: AskQuestionComponent
       },
       {
-        path: ":qId/:qHeader",
-        component: ViewQuestionComponent 
+        path: ':qId/:qHeader',
+        component: ViewQuestionComponent
       },
       {
         path: '',
         component: PageNotFoundComponent
       }
-    ]
+    ],
+    canActivate: [AuthGuard]
   },
   {
     path: 'search',
-    component: SearchResultsComponent
+    component: SearchResultsComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: '**',
-    component: PageNotFoundComponent
+    component: PageNotFoundComponent,
+    canActivate: [AuthGuard]
   }
 ];
 
