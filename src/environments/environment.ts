@@ -5,8 +5,8 @@
 export const environment = {
   production: false,
   // apiUrl: 'http://localhost:8080'
-  apiUrl: 'http://devnet-pp.herokuapp.com/v1',
-  authUrl: 'http://devnet-pp.herokuapp.com'
+  apiUrl: 'https://devnet-pp.herokuapp.com/v1',
+  authUrl: 'https://devnet-pp.herokuapp.com'
 };
 
 /*
