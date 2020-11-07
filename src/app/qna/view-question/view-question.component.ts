@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { AuthService } from 'src/app/authentication/auth.service';
 import { SharedService } from 'src/app/services/shared.service';
 import { CharLimits, Comment, EditorMode, EditorType, Post, QnaRequest } from 'src/app/utilities/constants/app.constants';
 import { QuestionService } from '../question.service';
@@ -34,7 +35,8 @@ export class ViewQuestionComponent implements OnInit {
     private route: ActivatedRoute,
     private questionService: QuestionService,
     private router: Router,
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    private authService: AuthService
   ) { }
 
   // To call router:
@@ -106,6 +108,11 @@ export class ViewQuestionComponent implements OnInit {
     this.qnaRequest.id = answerObj.id;
     this.qnaRequest.answerBody = answerObj.answerBody;
     this.sharedService.setQnaRequest(this.qnaRequest);
+  }
+
+  hasEditAccess(owner: string) {
+    const loggedInUser: string = this.authService.currentUser.value.username;
+    return (owner === loggedInUser) ? true : false;
   }
 
   // submitAnswerClicked(questionId: string) {

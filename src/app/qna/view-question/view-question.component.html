@@ -3,9 +3,9 @@
     <div class="col col-md-9">
       <div class="card">
         <div class="row py-4 mx-4">
-          <app-vote-badge [currentUpvotes]="questionObj.vote.upVotes"
-            [currentDownvotes]="questionObj.vote.downVotes" [currentVoteStatus]="questionObj.vote.voteStatus"
-            [postId]="questionObj.id" [commentId]="" [usersInteracted]="questionObj.usersInteracted">
+          <app-vote-badge [currentUpvotes]="questionObj.vote.upVotes" [currentDownvotes]="questionObj.vote.downVotes"
+            [currentVoteStatus]="questionObj.vote.voteStatus" [postId]="questionObj.id" [commentId]=""
+            [usersInteracted]="questionObj.usersInteracted">
           </app-vote-badge>
           <div class="col pl-4 pr-0" style="min-width: 80%;">
             <div class="row p-0 m-0 mb-3 word-warp">
@@ -17,7 +17,7 @@
               </div>
               <hr class="comment-seperator" />
               <div class="row maxout-min-width p-0 m-0">
-                <div>
+                <div *ngIf="hasEditAccess(questionObj.username)">
                   <a (click)="editQuestionClicked(questionObj)" class="link mr-2">edit</a>
                   <a (click)="deleteQuestionClicked(questionObj.id)" class="link">delete</a>
                 </div>
@@ -78,7 +78,7 @@
                     <markdown class="variable-binding" [data]="answer.answerBody"></markdown>
                   </div>
                   <div class="row maxout-min-width p-0 m-0">
-                    <div>
+                    <div *ngIf="hasEditAccess(answer.username)">
                       <a (click)="editAnswerClicked(answer, i)" class="link mr-2">edit</a>
                       <a href="#">delete</a>
                     </div>
