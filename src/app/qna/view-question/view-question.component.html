@@ -80,7 +80,7 @@
                   <div class="row maxout-min-width p-0 m-0">
                     <div *ngIf="hasEditAccess(answer.username)">
                       <a (click)="editAnswerClicked(answer, i)" class="link mr-2">edit</a>
-                      <a href="#">delete</a>
+                      <a (click)="deleteAnswerClicked(answer.id)" class="link mr-2">delete</a>
                     </div>
                     <div class="author-card ml-auto m-0 p-0">
                       <a href="" class="p-2 float-left">

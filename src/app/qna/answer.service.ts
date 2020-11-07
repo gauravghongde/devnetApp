@@ -24,4 +24,8 @@ export class AnswerService {
     return this.commonService.putMethod(`${environment.apiUrl}/posts/${answerId}/update`, answerReq);
   }
 
+  deleteAnswer(answerId: string): Observable<any> {
+    return this.commonService.deleteMethod(`${environment.apiUrl}/posts/${answerId}/delete`);
+  }
+
 }

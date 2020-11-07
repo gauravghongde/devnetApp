@@ -3,6 +3,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AuthService } from 'src/app/authentication/auth.service';
 import { SharedService } from 'src/app/services/shared.service';
 import { CharLimits, Comment, EditorMode, EditorType, Post, QnaRequest } from 'src/app/utilities/constants/app.constants';
+import { AnswerService } from '../answer.service';
 import { QuestionService } from '../question.service';
 
 @Component({
@@ -34,6 +35,7 @@ export class ViewQuestionComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private questionService: QuestionService,
+    private answerService: AnswerService,
     private router: Router,
     private sharedService: SharedService,
     private authService: AuthService
@@ -63,21 +65,21 @@ export class ViewQuestionComponent implements OnInit {
     this.sharedService.setQnaRequest(this.qnaRequest);
     this.questionService.getQueWithAns(questionId, questionHeader).subscribe(
       (getQueWithAnsResp: any) => {
-      console.log("Question + Array of Answers:: ", getQueWithAnsResp);
-      getQueWithAnsResp.forEach((postObj: any) => {
-        (postObj.id === postObj.questionId) ? this.questionObj = postObj : this.answerObjList.push(postObj);
+        console.log("Question + Array of Answers:: ", getQueWithAnsResp);
+        getQueWithAnsResp.forEach((postObj: any) => {
+          (postObj.id === postObj.questionId) ? this.questionObj = postObj : this.answerObjList.push(postObj);
+        });
+        // this.currentUpvotes = +this.questionObj.upVotes; //parseInt(this.questionObj.upVotes)
+        // this.currentDownvotes = +this.questionObj
+        if (this.answerObjList.length === 0) {
+          this.isAnswerWindowOpen = false;
+        }
+        this.isLoading = false;
+      },
+      (err) => {
+        console.log(err);
+        this.isLoading = false;
       });
-      // this.currentUpvotes = +this.questionObj.upVotes; //parseInt(this.questionObj.upVotes)
-      // this.currentDownvotes = +this.questionObj
-      if (this.answerObjList.length === 0) {
-        this.isAnswerWindowOpen = false;
-      }
-      this.isLoading = false;
-    },
-    (err) => {
-      console.log(err);
-      this.isLoading = false;
-    });
   }
 
   deleteQuestionClicked(questionId: string) {
@@ -108,6 +110,16 @@ export class ViewQuestionComponent implements OnInit {
     this.qnaRequest.id = answerObj.id;
     this.qnaRequest.answerBody = answerObj.answerBody;
     this.sharedService.setQnaRequest(this.qnaRequest);
+  }
+
+  deleteAnswerClicked(answerId: string) {
+    if (confirm('Are you sure you want to delete this answer?')) {
+      this.answerService.deleteAnswer(answerId).subscribe(res => console.log(res));
+      alert('Answer was deleted');
+      window.location.reload();
+    } else {
+      console.log('Answer was not deleted.');
+    }
   }
 
   hasEditAccess(owner: string) {

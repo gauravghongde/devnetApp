@@ -13,7 +13,7 @@ export class CommonService {
     return this.httpClient.get(url);
   }
 
-  public getMethodWithQueryParam(url: string, param: HttpParams): Observable<any> {
+  public getMethodWithQueryParam(url: string, param: any): Observable<any> {
     return this.httpClient.get(url, {
       params: param,
       observe: 'response'

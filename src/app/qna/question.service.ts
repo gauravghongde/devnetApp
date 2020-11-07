@@ -1,4 +1,3 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -32,8 +31,7 @@ export class QuestionService {
   }
 
   searchQuestion(searchQuery: string) {
-    const queryParam = new HttpParams();
-    queryParam.set('query', 'searchQuery');
+    const queryParam = { query: searchQuery };
     return this.commonService.getMethodWithQueryParam(this.searchQuestionUrl, queryParam);
   }
 
@@ -45,9 +43,8 @@ export class QuestionService {
     return this.commonService.getMethod(this.getQuestionUrl);
   }
 
-  deleteQuestion(questionId: string):Observable<any> {
-    const deleteQuestionUrl = `${environment.apiUrl}/posts/${questionId}/delete`;
-    return this.commonService.deleteMethod(deleteQuestionUrl);
+  deleteQuestion(questionId: string): Observable<any> {
+    return this.commonService.deleteMethod(`${environment.apiUrl}/posts/${questionId}/delete`);
   }
 
 }
