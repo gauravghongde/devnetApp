@@ -1,0 +1,51 @@
+<form class="form-group answer-body">
+  <label>
+    <h5>Write your {{editorType}} here</h5>
+  </label>
+  <nav class="pull-right pr-1">
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+      <a class="nav-item nav-link active" id="nav-edit-tab" data-toggle="tab" href="#nav-edit" role="tab"
+        aria-controls="nav-home" aria-selected="true">Edit</a>
+      <a class="nav-item nav-link" id="nav-preview-tab" data-toggle="tab" href="#nav-preview" role="tab"
+        aria-controls="nav-contact" aria-selected="false">Preview</a>
+    </div>
+  </nav>
+  <div class="tab-content" id="nav-tabContent">
+    <div class="tab-pane fade show active" id="nav-edit" role="tabpanel" aria-labelledby="nav-edit-tab">
+      <div class="card">
+        <div *ngIf="editorType === editorTypeEnum.QUESTION" class="card-header form-group">
+          <label for="questionHeader">Title*</label>
+          <input type="text" [(ngModel)]="questionHeader" class="form-control" name="questionHeader"
+            aria-describedby="qustionTitle" placeholder="Enter Title">
+        </div>
+        <div class="card-body form-group">
+          <!-- <label for="qnaBody"></label> -->
+          <textarea class="form-control variable-textarea" [(ngModel)]="markdown" name="qnaBody"
+            rows="4" placeholder="Type here! (you can include code)"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="tab-pane fade" id="nav-preview" role="tabpanel" aria-labelledby="nav-preview-tab">
+      <div class="card">
+        <div class="card-header">
+          <b>Preview</b>
+        </div>
+        <div class="card-body word-warp">
+          <p *ngIf="!isConditionSatisfied()" class="text-muted">As you type, you can see the preview here!</p>
+          <h3 *ngIf="isEditorTypeQuestion && isConditionSatisfied()">{{questionHeader}}
+            <hr />
+          </h3>
+          <markdown *ngIf="isConditionSatisfied()" class="variable-binding" [data]="markdown"></markdown>
+        </div>
+      </div>
+    </div>
+    <div class="mr-2 pull-left">
+      <button class="btn btn-color-green my-2 my-sm-0" (click)="submitClicked(questionHeader, markdown)" type="submit"
+        [disabled]="isSubmitDisabled()">
+        Submit
+      </button>
+    </div>
+    <div class="alert alert-danger dn-alert-danger" *ngIf="isQueError">{{errMsg}}</div>
+    <div *ngIf="loader" class="spinner-loader"></div>
+  </div>
+</form>

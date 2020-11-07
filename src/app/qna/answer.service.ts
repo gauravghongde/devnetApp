@@ -1,8 +1,8 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { isNullOrUndefined } from 'util';
+import { CommonService } from '../services/common.service';
 import { Post } from '../utilities/constants/app.constants';
 
 @Injectable({
@@ -12,11 +12,16 @@ export class AnswerService {
 
   addAnswerUrl: string;
 
-  constructor(private http: HttpClient) { }
+  constructor(private commonService: CommonService) { }
 
   addAnswer(answerReq: { answerBody: string }, questionId: string): Observable<Post> {
-    this.addAnswerUrl = `${environment.apiUrl}/posts/add`;
+    //options -> questionId is required for Answer Object to point to a perticular question identified by questionId
     const options = { params: new HttpParams().append("questionId", questionId) };
-    return this.http.post<Post>(this.addAnswerUrl, answerReq, options);
+    return this.commonService.postMethodWithOptions(`${environment.apiUrl}/posts/add`, answerReq, options);
   }
+
+  editAnswer(answerReq: { answerBody: string; }, answerId: any): Observable<Post> {
+    return this.commonService.putMethod(`${environment.apiUrl}/posts/${answerId}/update`, answerReq);
+  }
+
 }

@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     },
     errorResp => {
       this.loader = false;
-      alert("Couldn't Login : "+ errorResp);
+      alert('Couldn\'t Login : ' + errorResp);
     });
   }
 

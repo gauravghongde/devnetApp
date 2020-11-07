@@ -9,8 +9,6 @@ import { isNullOrUndefined } from 'util';
 })
 export class QuestionListViewComponent implements OnInit {
   @Input() questionList: Post[];
-  questionToNoOfAnswersMap = new Map<string, string>();
-  questionToUpVotesMap = new Map<string, string>();
 
   constructor() { }
 
@@ -18,10 +16,6 @@ export class QuestionListViewComponent implements OnInit {
     console.log('questionList: ', this.questionList);
     this.questionList.forEach(questionObj => {
       questionObj.questionBody = questionObj.questionBody.replace(/[^a-zA-Z ?.:,]/g, '');
-      this.questionToNoOfAnswersMap.set(questionObj.id,
-        !isNullOrUndefined(questionObj.noOfAnswers) ? (questionObj.noOfAnswers).toString() : '0');
-      this.questionToUpVotesMap.set(questionObj.id,
-        (questionObj.vote.upVotes - questionObj.vote.downVotes).toString());
     });
   }
 

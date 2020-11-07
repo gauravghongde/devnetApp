@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { QuestionService } from '../question.service';
-import { Post } from 'src/app/utilities/constants/app.constants';
-import { ActivatedRoute } from '@angular/router';
-import { Router, Params, RoutesRecognized } from '@angular/router';
+import { ActivatedRoute, Router, RoutesRecognized } from '@angular/router';
+import { SharedService } from 'src/app/services/shared.service';
+import { EditorMode, EditorType, QnaRequest } from 'src/app/utilities/constants/app.constants';
 
 @Component({
   selector: 'app-ask-question',
@@ -11,6 +10,10 @@ import { Router, Params, RoutesRecognized } from '@angular/router';
 })
 export class AskQuestionComponent implements OnInit {
 
+  public viewOption: string;
+  public qnaObjToEdit: QnaRequest = new QnaRequest();
+  public editorMode: EditorMode;
+  public editorType: EditorType = EditorType.QUESTION;
   questionTitle = '';
   questionBody: string;
   markdown: string;
@@ -20,40 +23,15 @@ export class AskQuestionComponent implements OnInit {
   state$: any;
 
   constructor(
-    private questionService: QuestionService,
     private route: ActivatedRoute,
-    private router: Router
-    ) { }
+    private router: Router,
+    private sharedService: SharedService
+  ) { }
 
   ngOnInit(): void {
-    this.router.events.subscribe(val => {
-      if (val instanceof RoutesRecognized) {
-          console.log(val.state.root.firstChild.params);
-      }
-  });
+    this.editorMode = this.route.snapshot.data.editorMode;
+    console.log("Current Mode: ", this.viewOption);
+    this.qnaObjToEdit = this.sharedService.getQnaRequest();
+    console.log("edit mode wala question: ", this.qnaObjToEdit);
   }
-
-  submitQuestion(questionHeader: string, questionBody: string) {
-    if (questionBody.length >= 100
-      && questionBody.length <= 5000
-      && questionHeader.length <= 130
-      // && !questionBody.trim()
-      // && !questionTitle.trim()
-      ) {
-        this.loader = true;
-        this.isQueError = false;
-        this.errMsg = 'Submitting..';
-        this.questionService.addQuestion({questionHeader, questionBody}).subscribe((questionRes: Post) => {
-          console.log(questionRes);
-          alert('submitted!!');
-          this.loader = false;
-          window.location.href = '/questions/' + questionRes.id + '/submitted';
-        });
-    } else {
-      this.loader = false;
-      this.isQueError = true;
-      this.errMsg = 'Content not enough, please add more.';
-    }
-  }
-
 }

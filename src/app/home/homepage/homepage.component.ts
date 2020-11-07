@@ -10,11 +10,13 @@ import { Post } from 'src/app/utilities/constants/app.constants';
 export class HomepageComponent implements OnInit {
 
   allQuestions: Post[];
+  loader = true;
 
   constructor(private questionService: QuestionService) { }
 
   ngOnInit(): void {
     this.getAllQuestions();
+    this.loader = false;
   }
 
   getAllQuestions() {

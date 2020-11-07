@@ -1,8 +1,8 @@
-export class CharLimits {
-    MIN_CHAR_LIMIT_COMMENT: number = 10;
-    MAX_CHAR_LIMIT_COMMENT: number = 300;
-    MIN_CHAR_LIMIT_ANSWER: number = 50;
-    MAX_CHAR_LIMIT_ANSWER: number = 80000;
+export enum CharLimits {
+    MIN_CHAR_LIMIT_COMMENT = 10,
+    MAX_CHAR_LIMIT_COMMENT = 300,
+    MIN_CHAR_LIMIT_ANSWER = 50,
+    MAX_CHAR_LIMIT_ANSWER= 80000
 }
 
 export class ResponseTypes {
@@ -19,7 +19,7 @@ export class User {
     email?: string;
     jwt?: string;
   }
-  
+
 export class Comment {
     id: string;
     body: string;
@@ -35,12 +35,20 @@ export class Vote {
     voteStatus: number;
 }
 
+export class QnaRequest {
+  id: string;
+  questionHeader: string;
+  questionBody: string;
+  questionId: string
+  answerBody: string;
+}
+
 export class Post {
     id: string;
     questionHeader: string;
     questionBody: string;
     answerBody: string;
-    username: string; 
+    username: string;
     postedAt: string;
     questionId: string;
     noOfAnswers: number;
@@ -52,5 +60,15 @@ export class Post {
 export class QuestionWithAnswers {
     question: Post;
     listOfAnswers: Post[];
+}
+
+export enum EditorMode {
+  UPDATE = 'UPDATE',
+  ADD = 'ADD'
+}
+
+export enum EditorType {
+  ANSWER = 'Answer',
+  QUESTION = 'Question'
 }
 

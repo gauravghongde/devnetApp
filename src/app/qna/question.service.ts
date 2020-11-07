@@ -1,7 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { CommonService } from '../services/common.service';
 import { Post } from '../utilities/constants/app.constants';
 
 // const httpOptions = {
@@ -16,39 +17,37 @@ import { Post } from '../utilities/constants/app.constants';
 })
 export class QuestionService {
 
-  // private handleError: HandleError;
   addQuestionUrl: string = `${environment.apiUrl}/posts/add`;
   searchQuestionUrl: string = `${environment.apiUrl}/search`;
   getQuestionUrl: string = `${environment.apiUrl}/posts/questions`;
 
-  constructor(private http: HttpClient) { }
+  constructor(private commonService: CommonService) { }
 
   addQuestion(questionReq: any): Observable<Post> {
-    return this.http.post<Post>(this.addQuestionUrl, questionReq);
+    return this.commonService.postMethod(this.addQuestionUrl, questionReq);
   }
 
-  // editQuestion(): Observable<Post> {
-  //   return this.http.post<Post>(this.editQuestionUrl, )
-  // }
+  editQuestion(questionId: string, questionReq: any): Observable<Post> {
+    return this.commonService.putMethod(`${environment.apiUrl}/posts/${questionId}/update`, questionReq);
+  }
 
   searchQuestion(searchQuery: string) {
-    return this.http.get(this.searchQuestionUrl, {
-      params: { query: searchQuery },
-      observe: 'response'
-    });
+    const queryParam = new HttpParams();
+    queryParam.set('query', 'searchQuery');
+    return this.commonService.getMethodWithQueryParam(this.searchQuestionUrl, queryParam);
   }
 
   getQueWithAns(questionId: string, questionHeader: string) {
-    return this.http.get(this.getQuestionUrl + '/' + questionId);
+    return this.commonService.getMethod(this.getQuestionUrl + '/' + questionId);
   }
 
   getAllQuestions() {
-    return this.http.get(this.getQuestionUrl);
+    return this.commonService.getMethod(this.getQuestionUrl);
   }
 
-  deleteQuestion(questionId: string) {
+  deleteQuestion(questionId: string):Observable<any> {
     const deleteQuestionUrl = `${environment.apiUrl}/posts/${questionId}/delete`;
-    return this.http.delete(deleteQuestionUrl);
+    return this.commonService.deleteMethod(deleteQuestionUrl);
   }
 
 }

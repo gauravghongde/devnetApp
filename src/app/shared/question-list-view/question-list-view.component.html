@@ -3,10 +3,15 @@
         <div class="row">
             <div class="col">
                 <div class="badge badge-vote-count p-2 mr-1 mb-2">
-                    {{questionToUpVotesMap.get(questionObj.id)}} Votes
+                    {{questionObj.vote.upVotes - questionObj.vote.downVotes}} Votes
                 </div>
                 <div class="badge badge-answers-count p-2 ml-1 mb-2">
-                    {{questionToNoOfAnswersMap.get(questionObj.id)}} Answers
+                    <ng-container *ngIf="!questionObj.noOfAnswers || questionObj.noOfAnswers == 0">
+                        No Answers Yet    
+                    </ng-container>
+                    <ng-container *ngIf="questionObj.noOfAnswers > 0">
+                        {{questionObj.noOfAnswers}} Answers
+                    </ng-container>
                 </div>
 
                 <div class="question-header">
@@ -27,7 +32,7 @@
                 </div>
                 <hr/>
             </div>
-            <div class="col-md-2">
+            <div class="col col-md-2">
                 <div class="badge">
                 </div>
             </div>
