@@ -1,105 +1,122 @@
-<div class="mt-4 mx-4 px-2">
-    <div class="row">
-        <div class="col-md-9">
-            <div class="card">
-                <div class="row py-4 mx-4">
-                    <app-vote-badge [currentUpvotes]="+questionObj.vote.upVotes" [currentDownvotes]="+questionObj.vote.downVotes"
-                        [currentVoteStatus]="+questionObj.vote.voteStatus" [postId]="questionObj.id" [commentId]="" [usersInteracted]="questionObj.usersInteracted">
-                    </app-vote-badge>
-                    <div class="col pl-4 pr-0" style="min-width: 80%;">
-                        <div class="row p-0 m-0 mb-3 word-warp">
-                            <p class="text-muted maxout-min-width">Views: 124k, Answers: {{answerObjList.length}} </p>
-                            <h4>{{questionObj.questionHeader}}</h4>
-                            <hr />
-                            <div class="markdown-content">
-                                <markdown class="variable-binding" [data]="questionObj.questionBody"></markdown>
-                            </div>
-                            <div class="row maxout-min-width p-0 m-0">
-                                <div >
-                                    <a (click)="editQuestionClicked()" class="link mr-2">edit</a>
-                                    <a (click)="deleteQuestionClicked(questionObj.id)" class="link">delete</a>
-                                </div>
-                                <div class="author-card ml-auto m-0 p-0">
-                                    <a href="" class="p-2 float-left">
-                                        <img src="/assets/photo.jpg" alt="" width="38" height="38" class="bar-sm">
-                                    </a>
-                                    <div class="px-2 pt-2 author-username">
-                                        <a href="/users/{{questionObj.username}}"><b>{{questionObj.username}}</b></a>
-                                    <br/>
-                                        <p class="m-0 font-13 author-date">{{questionObj.postedAt | date}}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <hr class="comment-seperator"/>
-                        <div class="row py-0 m-0 comment-display-contents">
-                            <app-comments [post] = "questionObj" [index]="-1"></app-comments>
-                        </div>
-                    </div>
-                </div>
-                <hr class="comment-seperator"/>  
-            </div>
-        </div>
-        <div class="col-md-3"></div>
-    </div>
-    <!-- answer section -->
-    <ng-container *ngIf="answerObjList.length == 0 && !isAnswerWindowOpen">
-        <!-- No Answer Warning-->
+<div *ngIf="!isLoading" class="mt-4 mx-4 px-2">
+  <div class="row">
+    <div class="col col-md-9">
+      <div class="card">
         <div class="row py-4 mx-4">
-            <h5 class="text-muted m-0">No Answers yet! Would you like to write one
-            <button class="btn btn-hollow-color-green my-2 my-sm-0" (click)="isAnswerWindowOpen = true" >Write An Answer</button>
-            </h5>
-        </div>
-    </ng-container>
-    <ng-container>
-        <h4 *ngIf="answerObjList.length > 0">Answers</h4>
-        <div *ngFor="let answer of answerObjList; let i=index;" class="row">
-            <div class="col-md-9">
-                <div class="card">
-                    <div class="row py-4 mx-4">
-                        <app-vote-badge [currentUpvotes]="+answer.vote.upVotes" [currentDownvotes]="+answer.vote.downVotes"
-                            [currentVoteStatus]="+answer.vote.voteStatus" [postId]="answer.id" [commentId]="" [usersInteracted]="answer.usersInteracted" >
-                        </app-vote-badge>
-                        <div class="col pl-4 pr-0" style="min-width: 80%;">
-                            <div class="row p-0 m-0 mb-3 word-warp">
-                                <p class="text-muted">Views: 124k, Answers: 12 </p>
-                                <h4>{{answer.questionHeader}}</h4>
-                                <hr />
-                                <div class="markdown-content">
-                                    <markdown class="variable-binding" [data]="answer.answerBody"></markdown>
-                                </div>
-                                <div class="row maxout-min-width p-0 m-0">
-                                    <div >
-                                        <a href="#" class="pr-2">edit</a>
-                                        <a href="#">delete</a>
-                                    </div>
-                                    <div class="author-card ml-auto m-0 p-0">
-                                        <a href="" class="p-2 float-left">
-                                            <img src="https://www.gravatar.com/avatar/147c5a9cc1feec049c50da791ac7d144?s=388&d=identicon" alt="" width="38" height="38" class="bar-sm">
-                                        </a>
-                                        <div class="px-2 pt-2 author-username">
-                                            <a href="/users/{{answer.username}}"><b>{{answer.username}}</b></a>
-                                        <br/>
-                                            <p class="m-0 font-13 author-date">{{answer.postedAt | date}}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <hr class="comment-seperator"/>  
-                            <div class="row py-0 m-0 comment-display-contents">
-                                <app-comments [post] = "answer" [index]="i"></app-comments>
-                            </div>
-                        </div>
-                    </div>
+          <app-vote-badge [currentUpvotes]="questionObj.vote.upVotes" [currentDownvotes]="questionObj.vote.downVotes"
+            [currentVoteStatus]="questionObj.vote.voteStatus" [postId]="questionObj.id" [commentId]=""
+            [usersInteracted]="questionObj.usersInteracted">
+          </app-vote-badge>
+          <div class="col pl-4 pr-0" style="min-width: 80%;">
+            <div class="row p-0 m-0 mb-3 word-warp">
+              <p class="text-muted maxout-min-width">Views: 124k, Answers: {{answerObjList.length}} </p>
+              <h4>{{questionObj.questionHeader}}</h4>
+              <hr />
+              <div class="markdown-content mb-2">
+                <markdown class="variable-binding" [data]="questionObj.questionBody"></markdown>
+              </div>
+              <hr class="comment-seperator" />
+              <div class="row maxout-min-width p-0 m-0">
+                <div *ngIf="hasEditAccess(questionObj.username)">
+                  <a (click)="editQuestionClicked(questionObj)" class="link mr-2">edit</a>
+                  <a (click)="deleteQuestionClicked(questionObj.id)" class="link">delete</a>
                 </div>
+                <div class="author-card ml-auto m-0 p-0">
+                  <a href="" class="p-2 float-left">
+                    <img src="/assets/photo.jpg" alt="" width="38" height="38" class="bar-sm">
+                  </a>
+                  <div class="px-2 pt-2 author-username">
+                    <a href="/users/{{questionObj.username}}"><b>{{questionObj.username}}</b></a>
+                    <br />
+                    <p class="m-0 font-13 author-date">{{questionObj.postedAt | date}}</p>
+                  </div>
+                </div>
+              </div>
             </div>
+            <hr class="comment-seperator" />
+            <div class="row py-0 m-0 comment-display-contents">
+              <app-comments [post]="questionObj" [index]="-1"></app-comments>
+            </div>
+          </div>
         </div>
-        <!-- write answer section -->
-        <div class="row" *ngIf="isAnswerWindowOpen">
-            <div class="col-md-9">
-                <div class="card">
-                    <div class="row py-4 mx-4">
-                        <form class="form-group answer-body">
+        <hr class="comment-seperator" />
+      </div>
+    </div>
+    <div class="col col-md-3"></div>
+  </div>
+  <!-- answer section -->
+  <ng-container *ngIf="answerObjList.length == 0 && !isAnswerWindowOpen">
+    <!-- No Answer Warning-->
+    <div class="row py-4 mx-4">
+      <h5 class="text-muted m-0">No Answers yet! Would you like to write one
+        <button class="btn btn-hollow-color-green my-2 my-sm-0" (click)="isAnswerWindowOpen = true">Write An
+          Answer</button>
+      </h5>
+    </div>
+  </ng-container>
+  <ng-container>
+    <h4 *ngIf="answerObjList.length > 0">Answers</h4>
+    <div *ngFor="let answer of answerObjList; let i=index;" class="row">
+      <div class="col col-md-9">
+        <div class="card">
+          <div class="row py-4 mx-4">
+            <app-vote-badge [currentUpvotes]="answer.vote.upVotes" [currentDownvotes]="answer.vote.downVotes"
+              [currentVoteStatus]="answer.vote.voteStatus" [postId]="answer.id" [commentId]=""
+              [usersInteracted]="answer.usersInteracted">
+            </app-vote-badge>
+            <div class="col pl-4 pr-0" style="min-width: 80%;">
+              <div class="row p-0 m-0 mb-3 word-warp">
+                <div class="my-2">
+                  <a *ngIf="i === indexOfAnsInEditMode" class="text-danger link" (click)="indexOfAnsInEditMode = -1">
+                    ← Discard
+                  </a>
+                </div>
+                <ng-container *ngIf="i!=indexOfAnsInEditMode">
+                  <p class="text-muted">Views: 124k, Comments: {{answer.comments.length}} </p>
+                  <hr />
+                  <div class="markdown-content mb-2">
+                    <markdown class="variable-binding" [data]="answer.answerBody"></markdown>
+                  </div>
+                  <div class="row maxout-min-width p-0 m-0">
+                    <div *ngIf="hasEditAccess(answer.username)">
+                      <a (click)="editAnswerClicked(answer, i)" class="link mr-2">edit</a>
+                      <a (click)="deleteAnswerClicked(answer.id)" class="link mr-2">delete</a>
+                    </div>
+                    <div class="author-card ml-auto m-0 p-0">
+                      <a href="" class="p-2 float-left">
+                        <img src="https://www.gravatar.com/avatar/147c5a9cc1feec049c50da791ac7d144?s=388&d=identicon"
+                          alt="" width="38" height="38" class="bar-sm">
+                      </a>
+                      <div class="px-2 pt-2 author-username">
+                        <a href="/users/{{answer.username}}"><b>{{answer.username}}</b></a>
+                        <br />
+                        <p class="m-0 font-13 author-date">{{answer.postedAt | date}}</p>
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
+                <app-qna-editor *ngIf="i === indexOfAnsInEditMode" class="w-100" [qnaRequest]="qnaRequest"
+                  [editorMode]="editorMode" [editorType]="editorType">
+                </app-qna-editor>
+
+              </div>
+              <hr class="comment-seperator" />
+              <div class="row py-0 m-0 comment-display-contents">
+                <app-comments [post]="answer" [index]="i"></app-comments>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- write answer section -->
+    <div class="row" *ngIf="isAnswerWindowOpen">
+      <div class="col col-md-9">
+        <div class="">
+          <div class="row py-4 mx-0">
+            <app-qna-editor class="w-100" [qnaRequest]="qnaRequest" [editorMode]="editorMode" [editorType]="editorType">
+            </app-qna-editor>
+            <!-- <form class="form-group answer-body">
                             <label for="answerBody"><h5>Your Answer -</h5></label>
                             <nav class="pull-right pr-1">
                                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
@@ -123,10 +140,11 @@
                             </div>
                         </form>
                         <button class="btn btn-color-green my-2 my-sm-0" (click)="submitAnswerClicked(questionObj.id)" type="submit">Submit</button>
-                        <div class="ml-2 alert alert-danger dn-alert-danger" *ngIf="isAnsError">{{errMsg}}</div>
-                    </div>
-                </div>
-            </div>
+                        <div class="ml-2 alert alert-danger dn-alert-danger" *ngIf="isAnsError">{{errMsg}}</div> -->
+          </div>
         </div>
-    </ng-container>
+      </div>
+    </div>
+  </ng-container>
 </div>
+<div *ngIf="isLoading" class="spinner-loader m-4"></div>

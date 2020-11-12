@@ -11,6 +11,7 @@ import { ViewQuestionComponent } from './qna/view-question/view-question.compone
 import { AboutComponent } from './about/about.component';
 import { ContactComponent } from './contact/contact.component';
 import { ContributeComponent } from './contribute/contribute.component';
+import { EditorMode } from './utilities/constants/app.constants';
 
 const routes: Routes = [
   {
@@ -49,7 +50,13 @@ const routes: Routes = [
     children: [
       {
         path: 'ask',
-        component: AskQuestionComponent
+        component: AskQuestionComponent,
+        data: { editorMode: EditorMode.ADD }
+      },
+      {
+        path: 'edit/:questionId',
+        component: AskQuestionComponent,
+        data: { editorMode: EditorMode.UPDATE }
       },
       {
         path: ':qId/:qHeader',

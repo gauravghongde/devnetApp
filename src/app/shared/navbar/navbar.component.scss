@@ -1,6 +1,7 @@
 @import "src/app/utilities/shared_variables.scss";
 .nav-bg-color {
-    background-color: $dn-dark-blue;
+    background-color: #101357c4;
+    backdrop-filter: blur(5px);
 }
 
 .search-expand {

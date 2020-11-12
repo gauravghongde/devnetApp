@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { QuestionService } from 'src/app/qna/question.service';
 import { Post } from 'src/app/utilities/constants/app.constants';
-import { HttpErrorResponse } from '@angular/common/http';
-
 
 @Component({
   selector: 'app-search-results',
@@ -43,10 +41,10 @@ export class SearchResultsComponent implements OnInit {
         this.searchResultObj = questionObjArr.body;
         console.log('this.searchResultObj: ', this.searchResultObj);
       },
-      (err) => {
-        this.isError = true;
-        this.errorMsg = err;
-      });
+        (err) => {
+          this.isError = true;
+          this.errorMsg = err;
+        });
       this.searchLoader = false;
     }
   }

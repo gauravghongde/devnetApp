@@ -1,70 +1,70 @@
 voter-default {
-    background-color: darkgray;
-    color: green($color: #000000);
-}
-
-voter-upvoted {
-    // @extend .alert-success;
-}
-
-voter-downvoted {
-    // @extend .alert-danger;
+  background-color: darkgray;
+  color: green($color: #000000);
 }
 
 .author-card {
-    width: 170px;
-    background: #101357;
-    float: right;
-    padding: 8px;
-    border-radius: 4px;
+  width: 170px;
+  background: #101357;
+  float: right;
+  padding: 8px;
+  border-radius: 4px;
 }
 
 .author-card img {
-    border: 2px solid #c0d6ff;
-    border-radius: 2px;
+  border: 2px solid #c0d6ff;
+  border-radius: 2px;
 }
 
 .font-13 {
-    font-size: 13px;
+  font-size: 13px;
 }
 
 .author-date {
-    
-    color: white;
+  color: white;
 }
 
-.author-username a { 
-    color:lightblue !important; 
-    text-decoration: none !important;
+.author-username a {
+  color: lightblue !important;
+  text-decoration: none !important;
 }
-.author-username a:hover { 
-    color:white !important; 
+.author-username a:hover {
+  color: white !important;
 }
 
 a {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 a:hover {
-    color: fade-out($color: lightblue, $amount: 0.1);
+  color: fade-out($color: lightblue, $amount: 0.1);
 }
 
 .markdown-content {
-    width: 100%;
+  width: 100%;
 }
 
 .answer-body {
-    width: 100%;
+  width: 100%;
 }
 
 .pull-right {
-    float: right !important;
+  float: right !important;
 }
 
 .preview-answer {
-    min-height: 165px;
+  min-height: 165px;
 }
 
 .comment-display-contents {
-    display: contents;
+  display: contents;
+}
+
+.link {
+  color: #007bff;
+}
+
+.link:hover {
+  cursor: pointer;
+  text-decoration: underline;
 }

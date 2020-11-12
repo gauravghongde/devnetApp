@@ -1,8 +1,8 @@
 <ng-container *ngFor="let comment of post.comments">
     <ng-container *ngIf="comment">
         <div class="row py-0 mx-0 comment-body">
-            <app-vote-badge [currentUpvotes]="+comment.vote.upVotes" [currentDownvotes]="+comment.vote.downVotes"
-                [currentVoteStatus]="+comment.vote.voteStatus" [postId]="post.id" [commentId]="comment.id"
+            <app-vote-badge [currentUpvotes]="comment.vote.upVotes" [currentDownvotes]="comment.vote.downVotes"
+                [currentVoteStatus]="comment.vote.voteStatus" [postId]="post.id" [commentId]="comment.id"
                 [usersInteracted]="comment.usersInteracted">
             </app-vote-badge>
             <ng-container>
@@ -13,7 +13,7 @@
                             <span *ngIf="comment.username == post.username"
                                 class="badge badge-secondary px-2 mr-2 comment-author-badge">{{comment.username}}
                             </span>
-                            <span *ngIf="comment.username != post.username" 
+                            <span *ngIf="comment.username != post.username"
                                 class="badge badge-secondary border px-2 mr-2 comment-user-badge">{{comment.username}}
                             </span>
                         </a>
@@ -63,12 +63,12 @@
             <div id="{{'commentBodyDOM'+newComment.id}}" class="col pl-4 pr-0" style="min-width: 85%;">
                 <p class="my-2">
                     <span id="{{'commentTextDOM'+newComment.id}}">{{newComment.body}}</span>
-                     – 
+                     –
                     <a href="/users/{{newComment.username}}">
                         <span *ngIf="newComment.username == post.username"
                             class="badge badge-secondary px-2 mr-2 comment-author-badge">{{newComment.username}}
                         </span>
-                        <span *ngIf="newComment.username != post.username" 
+                        <span *ngIf="newComment.username != post.username"
                             class="badge badge-secondary border px-2 mr-2 comment-user-badge">{{newComment.username}}
                         </span>
                     </a>

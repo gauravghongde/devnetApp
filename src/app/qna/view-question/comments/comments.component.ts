@@ -12,25 +12,23 @@ export class CommentsComponent implements OnInit {
 
   @Input() post: Post;
   @Input() index: number;
-  isCommentSubmitted = false;
-  isEditSuccessfull = false;
-  commentData = '';
-  commentEditData = '';
-  previousEditId = '';
-  isCmtError = false;
-  editClicked = false;
-  charLimits: CharLimits;
-  newComment: Comment = new Comment();
-  errMsg: string;
+  public isCommentSubmitted = false;
+  public isEditSuccessfull = false;
+  public commentData = '';
+  public commentEditData = '';
+  public previousEditId = '';
+  public isCmtError = false;
+  public editClicked = false;
+  public charLimits = CharLimits;
+  public newComment: Comment = new Comment();
+  public errMsg: string;
 
   constructor(
     private commentService: CommentService,
     private authService: AuthService
   ) { }
 
-  ngOnInit(): void {
-    this.charLimits = new CharLimits();
-  }
+  ngOnInit(): void {}
 
   hasEditAccess(commentUser: string) {
     const loggedInUser: string = this.authService.currentUser.value.username;

@@ -3,18 +3,9 @@
         <app-loader></app-loader>
     </ng-container>
     <ng-container *ngIf="!loader">
-        <div class="container mt-lg-5">
-            <div class="row mx-auto mb-lg-2" style="width: 300px;">
-                <button type="submit" class="btn btn-hollow-color-dark-blue btn-block">Login with Github</button>
-            </div>
-            <div class="row mx-auto mb-lg-2" style="width: 300px;">
-                <button type="submit" class="btn btn-hollow-color-dark-blue btn-block">Login with Google</button>
-            </div>
-            <div class="row mx-auto mb-lg-3" style="width: 300px;">
-                <button type="submit" class="btn btn-hollow-color-dark-blue btn-block">Login with twitter</button>
-            </div>
-            <div class="row align-items-center">
-                <div class="card mx-auto" style="width: 300px;">
+        <div class="row mx-0 my-4 py-4">
+            <div class="card p-4 card-secondary fit-content-fixed">
+                <div class="card card-primary" style="width: 300px;">
                     <div class="card-body">
                         <form>
                             <div class="form-group">
@@ -28,9 +19,10 @@
                             <div class="form-group">
                                 <label class="text-left" for="passwordInput">Password</label>
                                 <div class="input-group">
-                                    <input [(ngModel)]="password" name="password" placeholder="Password" type="password" class="form-control"
-                                        id="passwordInput" required>
-                                    <div *ngIf="false" class="input-group-append border-left-0 input-group-text bg-transparent">
+                                    <input [(ngModel)]="password" name="password" placeholder="Password" type="password"
+                                        class="form-control" id="passwordInput" required>
+                                    <div *ngIf="false"
+                                        class="input-group-append border-left-0 input-group-text bg-transparent">
                                         <i class="material-icons">info</i>
                                     </div>
                                 </div>
@@ -39,13 +31,14 @@
                                 <input type="checkbox" class="form-check-input" id="exampleCheck1">
                                 <label class="form-check-label text-left" for="exampleCheck1">Remember password</label>
                             </div>
-                            <input type="submit" (click)="loginUser()" value="Login" class="btn btn-primary btn-hollow-color-green btn-block">
+                            <input type="submit" (click)="loginUser()" value="Login"
+                                class="btn btn-primary btn-hollow-color-green btn-block">
                         </form>
                     </div>
                 </div>
-            </div>
-            <div class="text-center mt-lg-3">
-                Don't have an account? <a href="/register">Register</a>
+                <div class="text-center">
+                    Don't have an account? <a href="/register">Register</a>
+                </div>
             </div>
         </div>
     </ng-container>
