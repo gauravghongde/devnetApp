@@ -1,0 +1,22 @@
+.center-box {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.nested-center-box {
+  align-self: center;
+}
+
+.profile-img {
+  border-radius: 50%;
+  margin-bottom: 1rem;
+  width: 150px;
+  height: 150px;
+}
+
+a img {
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+}

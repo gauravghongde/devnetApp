@@ -1,5 +1,5 @@
 <div class="flex-center-hv h-100">
-  <div class="card col-lg-4 card-button">
+  <div class="card col-lg-4 align-self-center">
     <div *ngIf="!loading && !submitted" class="card-body">
       <form class="text-left" [formGroup]="feedbackFormGroup">
         <h4>Feedback</h4>
@@ -13,7 +13,7 @@
           class="btn btn-hollow-color-green btn-block">
       </form>
     </div>
-    <div *ngIf="loading && !submitted" class="card-body flex-center">
+    <div *ngIf="loading && !submitted" class="card-body flex-center-hv">
       <div class="spinner-loader m-4"></div>
     </div>
     <div *ngIf="submitted" class="card-body m4">
