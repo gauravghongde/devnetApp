@@ -1,0 +1,26 @@
+<div class="flex-center-hv h-100">
+  <div class="card col-lg-4 align-self-center">
+    <div *ngIf="!loading && !submitted" class="card-body">
+      <form class="text-left" [formGroup]="feedbackFormGroup">
+        <h4>Feedback</h4>
+        <textarea class="textarea" rows="4" formControlName="feedbackText" placeholder="Your text here"></textarea>
+        <div class="text-danger text-x-small"
+          *ngIf="getFormControl('feedbackText').hasError('required') && getFormControl('feedbackText').touched">
+          This Field is required!
+        </div>
+        <input-stars formControlName="rating" label="Rating" [messages]="ratingMessages"></input-stars>
+        <input type="submit" (click)="submit()" [disabled]="!feedbackFormGroup.valid" value="Submit"
+          class="btn btn-hollow-color-green btn-block">
+      </form>
+    </div>
+    <div *ngIf="loading && !submitted" class="card-body flex-center-hv">
+      <div class="spinner-loader m-4"></div>
+    </div>
+    <div *ngIf="submitted" class="card-body m4">
+      <div class="p-3">
+        <i class="fa fal fa-check"></i>
+      </div>
+      <h4>Thanks for your feedback, much appreciated!</h4>
+    </div>
+  </div>
+</div>

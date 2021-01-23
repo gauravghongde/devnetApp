@@ -1,45 +1,40 @@
-<div id="login-component">
-    <ng-container *ngIf="loader">
-        <app-loader></app-loader>
-    </ng-container>
-    <ng-container *ngIf="!loader">
-        <div class="row mx-0 my-4 py-4">
-            <div class="card p-4 card-secondary fit-content-fixed">
-                <div class="card card-primary" style="width: 300px;">
-                    <div class="card-body">
-                        <form>
-                            <div class="form-group">
-                                <label class="text-left" for="usernameInput">Username</label>
-                                <input [(ngModel)]="username" name="username" placeholder="User" type="text"
-                                    class="form-control" id="usernameInput" aria-describedby="emailHelp" required>
-                                <!-- <div [hidden]="!username.errors.invalid">
-                                    There is no user or password matching this data.
-                                </div> -->
-                            </div>
-                            <div class="form-group">
-                                <label class="text-left" for="passwordInput">Password</label>
-                                <div class="input-group">
-                                    <input [(ngModel)]="password" name="password" placeholder="Password" type="password"
-                                        class="form-control" id="passwordInput" required>
-                                    <div *ngIf="false"
-                                        class="input-group-append border-left-0 input-group-text bg-transparent">
-                                        <i class="material-icons">info</i>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group form-check">
-                                <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                <label class="form-check-label text-left" for="exampleCheck1">Remember password</label>
-                            </div>
-                            <input type="submit" (click)="loginUser()" value="Login"
-                                class="btn btn-primary btn-hollow-color-green btn-block">
-                        </form>
-                    </div>
-                </div>
-                <div class="text-center">
-                    Don't have an account? <a href="/register">Register</a>
-                </div>
+<div class="flex-center-hv h-100">
+  <div class="card p-4 card-secondary col-md-3 align-self-center">
+    <div class="card card-primary">
+      <div class="card-body">
+        <form>
+          <div class="form-group">
+            <label class="text-left" for="usernameInput">Username</label>
+            <input [(ngModel)]="username" name="username" placeholder="User" type="text" class="form-control"
+              id="usernameInput" aria-describedby="emailHelp" required>
+            <!-- <div [hidden]="!username.errors.invalid">
+                        There is no user or password matching this data.
+                    </div> -->
+          </div>
+          <div class="form-group">
+            <label class="text-left" for="passwordInput">Password</label>
+            <div class="input-group">
+              <input [(ngModel)]="password" name="password" placeholder="Password" type="password" class="form-control"
+                id="passwordInput" required>
+              <div *ngIf="false" class="input-group-append border-left-0 input-group-text bg-transparent">
+                <i class="material-icons">info</i>
+              </div>
             </div>
-        </div>
-    </ng-container>
+          </div>
+          <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+            <label class="form-check-label text-left" for="exampleCheck1">Remember password</label>
+          </div>
+          <input *ngIf="!loader" type="submit" (click)="loginUser()" value="Login"
+            class="btn btn-primary btn-hollow-color-green btn-block">
+          <div *ngIf="loader" class="flex-center-hv">
+            <div class="spinner-loader m-2"></div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="text-center">
+      Don't have an account? <a href="/register">Register</a>
+    </div>
+  </div>
 </div>

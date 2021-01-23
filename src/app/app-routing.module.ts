@@ -1,17 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AboutComponent } from './about/about.component';
 import { LoginComponent } from './authentication/login/login.component';
 import { RegisterComponent } from './authentication/register/register.component';
-import { AuthGuard } from './_guards/auth.guard';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { HomepageComponent } from './home/homepage/homepage.component';
-import { AskQuestionComponent } from './qna/ask-question/ask-question.component';
-import { SearchResultsComponent } from './search/search-results/search-results.component';
-import { ViewQuestionComponent } from './qna/view-question/view-question.component';
-import { AboutComponent } from './about/about.component';
-import { ContactComponent } from './contact/contact.component';
 import { ContributeComponent } from './contribute/contribute.component';
+import { FeedbackComponent } from './feedback/feedback.component';
+import { HomepageComponent } from './home/homepage/homepage.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { AskQuestionComponent } from './qna/ask-question/ask-question.component';
+import { ViewQuestionComponent } from './qna/view-question/view-question.component';
+import { SearchResultsComponent } from './search/search-results/search-results.component';
 import { EditorMode } from './utilities/constants/app.constants';
+import { AuthGuard } from './_guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -33,8 +33,8 @@ const routes: Routes = [
     component: ContributeComponent
   },
   {
-    path: 'contact',
-    component: ContactComponent
+    path: 'feedback',
+    component: FeedbackComponent
   },
   {
     path: 'about',

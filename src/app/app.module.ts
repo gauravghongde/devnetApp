@@ -2,11 +2,14 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+import { AboutComponent } from './about/about.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthService } from './authentication/auth.service';
 import { LoginComponent } from './authentication/login/login.component';
 import { RegisterComponent } from './authentication/register/register.component';
+import { ContributeComponent } from './contribute/contribute.component';
+import { FeedbackComponent } from './feedback/feedback.component';
 import { HomeModule } from './home/home.module';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ProfileModule } from './profile/profile.module';
@@ -16,9 +19,6 @@ import { SharedModule } from './shared/shared.module';
 import { AuthGuard } from './_guards/auth.guard';
 import { ErrorInterceptor } from './_interceptors/error.interceptor';
 import { JwtInterceptor } from './_interceptors/jwt.interceptor';
-import { AboutComponent } from './about/about.component';
-import { ContactComponent } from './contact/contact.component';
-import { ContributeComponent } from './contribute/contribute.component';
 
 
 @NgModule({
@@ -28,8 +28,8 @@ import { ContributeComponent } from './contribute/contribute.component';
     LoginComponent,
     PageNotFoundComponent,
     AboutComponent,
-    ContactComponent,
-    ContributeComponent
+    ContributeComponent,
+    FeedbackComponent
   ],
   imports: [
     BrowserModule,

@@ -1,14 +1,29 @@
 .card-secondary {
-    backdrop-filter: blur(5px);
-    background-color: #ffffff9c;
+  backdrop-filter: blur(5px);
+  background-color: #ffffff9c;
 }
 
 .card-primary {
-    backdrop-filter: blur(5px);
-    background-color: #ffffff50;
+  backdrop-filter: blur(5px);
+  background-color: #ffffff50;
 }
 
 .fit-content-fixed {
-    min-width: fit-content;
-    max-width: fit-content;
+  min-width: fit-content;
+  max-width: fit-content;
+}
+
+.logo-btn-md {
+  height: 5rem;
+}
+
+.align-self-center {
+  padding: 0;
+  margin: 2rem;
+  align-self: center;
+}
+
+.flex-center-hv {
+  display: flex;
+  justify-content: center;
 }

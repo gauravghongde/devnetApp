@@ -1,0 +1,21 @@
+.notfound {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+
+.notfound .notfound-404 {
+  align-self: center;
+}
+
+.notfound .notfound-404 h1 > span {
+  text-shadow: -8px 0px 0px #fff;
+}
+
+.notfound .notfound-404 h1 {
+  font-family: "Montserrat", sans-serif;
+  font-size: 10rem;
+  font-weight: 900;
+  margin: 0px;
+  color: #262626;
+}

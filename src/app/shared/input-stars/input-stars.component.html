@@ -1,0 +1,17 @@
+<h4 *ngIf="label" class="star__label">{{label}}</h4>
+
+<div class="stars">
+  <ng-container *ngFor="let star of stars; index as i">
+    <svg class="star" (click)='setRating(star)'
+      (mouseover)="displayText = !disabled && messages ? messages[i] : undefined" (mouseout)="displayText = undefined"
+      width="255" height="240" viewBox="0 0 51 48">
+      <path d="m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z" />
+    </svg>
+
+  </ng-container>
+</div>
+
+<div class="star__rating__info">
+  <span *ngIf="displayText && !ratingText">{{displayText}}</span>
+  <span *ngIf="ratingText">{{ratingText}}</span>
+</div>

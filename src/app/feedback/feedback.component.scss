@@ -1,0 +1,24 @@
+.align-self-center {
+  text-align: center;
+  padding: 0;
+  margin: 2rem;
+  align-self: center;
+}
+
+.flex-center-hv {
+  display: flex;
+  justify-content: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.textarea {
+  width: -webkit-fill-available;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  &:focus {
+    outline: none;
+  }
+}
