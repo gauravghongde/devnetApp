@@ -1,14 +1,15 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { MarkdownModule } from 'ngx-markdown';
+import { GravatarDirective } from './avatar/gravatar.directive';
+import { InputStarsComponent } from './input-stars/input-stars.component';
 import { LoaderComponent } from './loader/loader.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { FormsModule } from '@angular/forms';
-import { VoteBadgeComponent } from './vote-badge/vote-badge.component';
-import { GravatarDirective } from './avatar/gravatar.directive';
-import { QuestionListViewComponent } from './question-list-view/question-list-view.component';
-import { RouterModule } from '@angular/router';
 import { QnaEditorComponent } from './qna-editor/qna-editor.component';
-import { MarkdownModule } from 'ngx-markdown';
+import { QuestionListViewComponent } from './question-list-view/question-list-view.component';
+import { VoteBadgeComponent } from './vote-badge/vote-badge.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { MarkdownModule } from 'ngx-markdown';
     GravatarDirective,
     QuestionListViewComponent,
     QnaEditorComponent,
+    InputStarsComponent,
   ],
   imports: [
     CommonModule,
@@ -30,7 +32,8 @@ import { MarkdownModule } from 'ngx-markdown';
     NavbarComponent,
     VoteBadgeComponent,
     QuestionListViewComponent,
-    QnaEditorComponent
+    QnaEditorComponent,
+    InputStarsComponent
   ]
 })
 export class SharedModule { }
