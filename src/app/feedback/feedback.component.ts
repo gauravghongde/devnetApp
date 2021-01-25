@@ -39,7 +39,7 @@ export class FeedbackComponent implements OnInit {
     const fbBody = new FormData;
     fbBody.append(FB_TEXT_PARAM, this.feedbackFormGroup.get('feedbackText').value);
     fbBody.append(FB_RATE_PARAM, this.feedbackFormGroup.get('rating').value);
-    this.commonService.postMethodWithOptions(FORM_URL, fbBody, { responseType: 'text' }).subscribe(
+    this.commonService.postMethodWithOptions(FORM_URL, fbBody, { responseType: 'text/html' }).subscribe(
       (resp: any) => {
         this.submitted = true;
         sessionStorage.setItem('isFBSubmitted', 'true');
@@ -47,8 +47,10 @@ export class FeedbackComponent implements OnInit {
         console.log("resp", resp);
       },
       (err: any) => {
-        this.submitted = false;
+        this.submitted = true;
+        sessionStorage.setItem('isFBSubmitted', 'true');
         this.loading = false;
+        console.log("err", err);
       }
     );
   }

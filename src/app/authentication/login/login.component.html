@@ -2,34 +2,40 @@
   <div class="card p-4 card-secondary col-md-3 align-self-center">
     <div class="card card-primary">
       <div class="card-body">
-        <form>
-          <div class="form-group">
-            <label class="text-left" for="usernameInput">Username</label>
-            <input [(ngModel)]="username" name="username" placeholder="User" type="text" class="form-control"
-              id="usernameInput" aria-describedby="emailHelp" required>
-            <!-- <div [hidden]="!username.errors.invalid">
-                        There is no user or password matching this data.
-                    </div> -->
-          </div>
-          <div class="form-group">
-            <label class="text-left" for="passwordInput">Password</label>
-            <div class="input-group">
-              <input [(ngModel)]="password" name="password" placeholder="Password" type="password" class="form-control"
-                id="passwordInput" required>
-              <div *ngIf="false" class="input-group-append border-left-0 input-group-text bg-transparent">
-                <i class="material-icons">info</i>
-              </div>
+        <form [formGroup]="loginFormGroup" (ngSubmit)="onSubmit()">
+
+          <div class="form-group input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+            </div>
+            <input formControlName="username" class="form-control" placeholder="Username" type="text"
+              [ngClass]="{ 'is-invalid': submitted && f.username.errors }">
+            <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+              <div *ngIf="f.username.errors.required">Username is required!</div>
             </div>
           </div>
-          <div class="form-group form-check">
-            <input type="checkbox" class="form-check-input" id="exampleCheck1">
-            <label class="form-check-label text-left" for="exampleCheck1">Remember password</label>
+
+          <div class="form-group input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"> <i class="fa fa-key"></i> </span>
+            </div>
+            <input formControlName="password" class="form-control" placeholder="Password" type="password"
+              [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
+            <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+              <div *ngIf="f.password.errors.required">Password is required!</div>
+            </div>
           </div>
-          <input *ngIf="!loader" type="submit" (click)="loginUser()" value="Login"
-            class="btn btn-primary btn-hollow-color-green btn-block">
+
+          <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" id="rpCheck1">
+            <label class="form-check-label text-left" for="rpCheck1">Remember password</label>
+          </div>
+
+          <input *ngIf="!loader" type="submit" value="Login" class="btn btn-hollow-color-green btn-block">
           <div *ngIf="loader" class="flex-center-hv">
             <div class="spinner-loader m-2"></div>
           </div>
+
         </form>
       </div>
     </div>
