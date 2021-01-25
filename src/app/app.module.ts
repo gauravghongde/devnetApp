@@ -17,7 +17,6 @@ import { QnaModule } from './qna/qna.module';
 import { SearchModule } from './search/search.module';
 import { SharedModule } from './shared/shared.module';
 import { AuthGuard } from './_guards/auth.guard';
-import { ErrorInterceptor } from './_interceptors/error.interceptor';
 import { JwtInterceptor } from './_interceptors/jwt.interceptor';
 
 
@@ -47,7 +46,6 @@ import { JwtInterceptor } from './_interceptors/jwt.interceptor';
     AuthService,
     AuthGuard,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]
 })
