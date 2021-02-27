@@ -33,6 +33,7 @@ import { VoteBadgeComponent } from './vote-badge/vote-badge.component';
     VoteBadgeComponent,
     QuestionListViewComponent,
     QnaEditorComponent,
+    GravatarDirective,
     InputStarsComponent
   ]
 })
