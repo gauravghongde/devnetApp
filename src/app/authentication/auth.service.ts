@@ -13,15 +13,15 @@ export class AuthService {
 
   private loginUrl = `${environment.authUrl}/auth/login`;
   private registerUrl = `${environment.authUrl}/auth/register`;
-  private currentUserSubject: BehaviorSubject<User>;
+  private currentUserSubject: BehaviorSubject<User> = new BehaviorSubject<User>(JSON.parse(sessionStorage.getItem('currentUser')));
 
-  constructor(private http: HttpClient, private router: Router) {
-    this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(sessionStorage.getItem('currentUser')));
-  }
+  constructor(private http: HttpClient, private router: Router) { }
 
   public get currentUser(): BehaviorSubject<User> {
     return this.currentUserSubject;
   }
+
+  public currentUser$: Observable<User> = this.currentUserSubject.asObservable();
 
   isLoggedIn(): boolean {
     console.log('ISLOGGEDIN', !!sessionStorage.getItem('currentUser'));

@@ -23,7 +23,7 @@
                 </div>
                 <div class="author-card ml-auto m-0 p-0">
                   <a href="" class="p-2 float-left">
-                    <img src="/assets/photo.jpg" alt="" width="38" height="38" class="bar-sm">
+                    <img appGravatar [avatarKey]="questionObj.username" alt="" width="38" height="38" class="bar-sm">
                   </a>
                   <div class="px-2 pt-2 author-username">
                     <a href="/users/{{questionObj.username}}"><b>{{questionObj.username}}</b></a>
@@ -42,7 +42,6 @@
         <hr class="comment-seperator" />
       </div>
     </div>
-    <div class="col col-md-3"></div>
   </div>
   <!-- answer section -->
   <ng-container *ngIf="answerObjList.length == 0 && !isAnswerWindowOpen">
@@ -84,7 +83,7 @@
                     </div>
                     <div class="author-card ml-auto m-0 p-0">
                       <a href="" class="p-2 float-left">
-                        <img src="https://www.gravatar.com/avatar/147c5a9cc1feec049c50da791ac7d144?s=388&d=identicon"
+                        <img appGravatar [avatarKey]="answer.username"
                           alt="" width="38" height="38" class="bar-sm">
                       </a>
                       <div class="px-2 pt-2 author-username">
