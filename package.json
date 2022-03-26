@@ -22,7 +22,7 @@
     "acorn": "^7.1.1",
     "angular-markdown-editor": "^2.0.2",
     "bootstrap": "^4.4.1",
-    "minimist": "^1.2.3",
+    "minimist": "^1.2.6",
     "ngx-markdown": "^9.0.0",
     "popper.js": "^1.16.0",
     "prismjs": "^1.23.0",
